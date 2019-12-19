@@ -4,6 +4,7 @@ import './index.css';
 import Navigation from './Navigation'; // Same thing to ./Navigation.js
 import Header from './Header';
 import Clock from './Clock';
+import Services from './Services';
 import * as serviceWorker from './serviceWorker';
 
 class App extends Component {
@@ -13,6 +14,7 @@ class App extends Component {
                 <Navigation logoTitle="CS Community"/>
                 <Header title="This is website for computer science students at SAC"/>
                 <Clock />
+                <Services />
             </div>
         )
     }

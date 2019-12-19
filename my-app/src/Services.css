@@ -1,0 +1,73 @@
+.services {
+    text-align: center;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    margin: 0;
+}
+
+.background{
+    background-image:url("./images/machine.jpg");
+    height: '30vh'
+}
+
+
+.services h3 {
+    font-size: 16px;
+    text-transform: uppercase;
+    color: rgb(256,184,7);
+    margin: 0;
+    padding:0
+}
+
+services h2 {
+    font-size:48px;
+    color:#fff;
+    margin-bottom: 48px;
+    margin-top:0
+}
+
+.services > .row {
+    display: flex;
+    justify-content: space-around;   
+}
+
+.services > .row span{
+    background-color: #fff;
+    width: 80px;
+    height: 80px;
+    display: inline-block;
+    border-radius: 50%;
+    color:#1d809f;
+    font-size: 36px;
+    
+}
+
+.services > .row span i{
+    contain: none;
+    align-items: center;
+    color: red;
+    line-height: 80px;
+}
+
+.services > .row span i:hover{
+    background-color:gold;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+}
+
+.services > .row h4{
+    margin-top: 8px;
+    font-size:20px;
+    font-family: 'Courier New', Courier, monospace;
+    color:gold;
+}
+
+.services > .row p{
+    margin: 0;
+    font-size:20px;
+    font-family: 'Courier New', Courier, monospace;
+    color: gold;
+    line-height:20px;
+}
+
