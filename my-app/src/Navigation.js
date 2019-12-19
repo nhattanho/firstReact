@@ -1,6 +1,32 @@
 import React, { Component } from 'react';
 import './Navigation.css';
-
+/*
+function date_time(id)
+    {
+        var date = new Date;
+        var h = date.getHours();
+        if(h<10)
+        {
+                h = "0"+h;
+        }
+        var m = date.getMinutes();
+        if(m<10)
+        {
+                m = "0"+m;
+        }
+        var s = date.getSeconds();
+        if(s<10)
+        {
+                s = "0"+s;
+        }
+        document.getElementById("s").innerHTML = ''+s;
+        document.getElementById("m").innerHTML = ''+m;
+        document.getElementById("h").innerHTML = ''+h;
+        setTimeout(function(){ date_time() }, 1000);
+        return true;
+    }
+    window.onload = date_time('s');
+  */
 //React.Component
 class Navigation extends Component { 
   render() {
@@ -12,7 +38,11 @@ class Navigation extends Component {
     });
     return (
         <nav>
-            <h2 className="logo" >{this.props.logoTitle}</h2>
+          <div>
+            <h2 className="logo"><a href="https://www.sac.edu/Pages/default.aspx" target="_blank">SAC</a></h2>
+            <h2>{this.props.logoTitle}</h2>
+          </div>
+
             <ul>
               <li><a href="#" target="_blank">Home</a></li>
               <li><a href="#" target="_blank">About</a></li>

@@ -7,17 +7,20 @@ nav {
     padding-right: 16px;
 }
 
-/* logo is class */
-.logo {
+/*There are 2 h2 ==> inline-block help 2 h2 in the same line*/
+h2 {
+    display: inline-block;
     text-align: center;
     font-size: 30px;
     color: blue;   
+    padding: 6px;  
 }
 
 nav ul {
     list-style: none;
 }
 
+/*inline-block helps each li is on the same line*/
 nav ul li {
     display: inline-block;
     margin-right: 8px;
@@ -29,6 +32,12 @@ li a{
     text-decoration: none;
 }
 
-li a:hover {
+.logo a:hover, li a:hover {
     background-color: rgb(25, 212, 34);
+    border-radius: 10px 0px 10px 0px;
   }
+
+  p {
+    margin: 0;
+    padding: 0;
+}
