@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import './Header.css';
-import backgroundImage from './images/SAC_1.jpg';
+import '../CSS/Header.css';
+import backgroundImage from '../images/SAC_1.jpg';
 
 const mystyles = {
     backgroundImage: `url(${backgroundImage})`,

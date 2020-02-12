@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import './CSS/index.css';
-import Navigation from './Components/Navigation'; // Same thing to ./Navigation.js
-import Header from './Components/Header';
-import Clock from './Components/Clock';
-import Services from './Components/Services';
-import * as serviceWorker from './Components/serviceWorker';
+import '../CSS/index.css';
+import Navigation from './Navigation'; // Same thing to ./Navigation.js
+import Header from './Header';
+import Clock from './Clock';
+import Services from './Services';
+import * as serviceWorker from './serviceWorker';
 
 class App extends Component {
     render(){

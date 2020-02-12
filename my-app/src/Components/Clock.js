@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './Clock.css';
+import '../CSS/Clock.css';
 
 function date_time(id)
 {
