@@ -13,7 +13,7 @@ var number2 = 12;
 var number3 = addition(10, 12); // call function
 console.log('number3 is ' + number3);
 
-// Function expression will don't have a name 
+// Function expression will not have a name 
 var result = function(number1, number2) {
     if (number1 > number2) {
         return (number1-number2)*2;
