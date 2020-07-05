@@ -1,0 +1,3 @@
+/* DOM means Document Object Model, used to connect webpages to scirpts like JS, and
+representation of an HTML document. On the other hand, HTLM Webpage content is stored
+in the DOM, and it can be accessed and manipulated by JS*/
