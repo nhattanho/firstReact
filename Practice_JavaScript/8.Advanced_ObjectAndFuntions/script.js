@@ -38,10 +38,10 @@ Person1.prototype.calAge = function() {
 Person1.prototype.lastname = 'ho';
 
 /* Note: nhat1 is an object of Person1, so name, birthYear, job are also its properties
-, however, the calAge function as well as lastname properties are prototype properties
-just only of Person1, they're not properties of nhat1 object. The reason nhat1 object 
-can access to these properties because it have a heritance from Person1. On the other hand,
-we can say nhat1 is instance of Person1 */
+, however, the calAge function as well as lastname properties are properties just only of
+Person1, they're not properties of nhat1 object. The reason nhat1 object can access to
+these properties because it have a heritance from Person1. On the other hand, we can say
+nhat1 is instance of Person1 */
 console.log(nhat1.lastname);
 console.log(nhat1.calAge);
 console.log(nhat1.hasOwnProperty('job'));//==> true
@@ -59,3 +59,57 @@ console.log(sum);
 //Show the Prototype Chain
 var x = [1, 3, 5];
 console.info(x);// show all information of x from elements as well as all its methods
+
+// Continue to create an Object by using Object.create
+var personProto = {
+    calAge: function() {
+        console.log(2020 - this.birthYear);
+    }
+};
+
+var nhat = Object.create(personProto); // recall: var nhat = new Object();
+nhat.name = 'nhatho';
+nhat.birthYear = '1990';
+nhat.job = 'tutor';
+console.log(nhat.hasOwnProperty('calAge'));//==> false
+console.log(nhat.hasOwnProperty('name')); // ==> true
+console.log(nhat);// will show all prototype chain of nhat object ==>
+// help us to inspect an object
+
+//Primitives vs objects just like passing a value vs a refrences
+
+/* 1.Primitive */
+var a = 23;
+var b = a; // ==> b = 23
+a = 46;
+console.log(a); //==> 46
+console.log(b); //==> 23
+
+/* 2.Object */
+var obj1 = {
+    name: 'nhattan',
+    job: 'student'
+};
+
+var obj2 = obj1;
+obj1.job = 'tutor';
+console.log(obj1.job);//==>tutor
+console.log(obj2.job);//==>tutor, because 2 objects point to the same memory <=> refrences in C++
+
+// Passing primitives vs passing object into a function
+var age = 29;
+var tan = {
+    name: 'tanho',
+    birthYear: 1992
+};
+
+function change(a, b) {
+    a = 30;
+    b.name = 'nhattan';
+}
+
+change(age,tan);
+//check the value of age and tan.name after calling the function
+console.log(age);// age = 29 <=> pass value
+console.log(tan.name);//tan.name = nhattan <=> pass reference
+
