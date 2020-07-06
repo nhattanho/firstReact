@@ -113,3 +113,107 @@ change(age,tan);
 console.log(age);// age = 29 <=> pass value
 console.log(tan.name);//tan.name = nhattan <=> pass reference
 
+/*************************************************************************************/
+// Dying in Function
+var years = [1992, 2004, 2006, 1889];
+function testCal(arr, func) {
+    var temp = [];
+    for(var i = 0; i < arr.length; i++) {
+        temp.push(func(arr[i]));
+    }
+    return temp;
+}
+
+function calAge(year) {
+    return 2020 - year;
+}
+
+function isfullAge(year){
+    return year>=18;
+}
+
+var res = testCal(years, calAge);
+console.log(res);
+
+var res1 = testCal(res, isfullAge);
+console.log(res1);
+
+/*************************************************************************************/
+//Funtion return function
+function checkLevel(level) {
+    if(level === 'A') {
+        return function(name) {
+            console.log('Hi ' + name + ', you are great candidate!');
+        };
+    } else if (level === 'B') {
+        return function(name) {
+            console.log('Hi ' + name + ', you\'re good now, but need to learn more.');
+        }
+    } else {
+        return function(name) {
+            console.log('We regret to inform you that you are not matching with our position!');
+        }
+    }
+
+}
+
+var getRes = checkLevel('A');
+getRes('nhat');
+checkLevel('B')('tan');
+
+/*************************************************************************************/
+//IIFE: Immediately invoked Function Expression
+/* Recall: we've known already function declaration and function expression
+And now, invoked function expression just likes a combination of them*/
+
+(function(yourGrade) {
+    var grade = Math.random()*11;
+    console.log((grade + yourGrade)/2);
+})(9);
+
+/* it similar to:
+1. Function Declaration */
+function calGrade(yourGrade) {
+    var grade = Math.random()*11;
+    console.log((grade + yourGrade)/2);
+}
+calGrade(9);
+
+/* 2.Function Expression*/
+var calGrade = function(yourGrade) {
+    var grade = Math.random()*11;
+    console.log((grade + yourGrade)/2);
+};
+calGrade(9);
+
+/*************************************************************************************/
+/* Funtion into a function */
+
+/*Note: function(birthYear) is a function expression, however, we can call it before we write
+a function expression as following the code at line 198. But it not true when we say we have call
+the function(birthYear) before we declare a function expression. Actually, yearToRetire(65)(1990)
+<=> var getFunction =  yearToRetire(65);
+    getFuntion(1990)
+==> it is very clear that we declared a function expression before calling it*/
+yearToRetire(65)(1990);
+
+function yearToRetire(AgeRetire) {
+    var message = ' years left';
+    //console.log(message);
+    /* Anonymous function or called inner funtion*/
+    return function(birthYear) { //it is all a function expression
+        var age = 2020 - birthYear;
+        console.log(AgeRetire - age + message);// inner function can access the parental function's variable
+    }
+}
+
+yearToRetire(65)(1992);
+
+function sum1(num1, num2){
+    console.log(num1+num2);
+}
+sum1(1,2);//just run only one time for function having the same parameters 
+sum1(1,2);
+/*************************************************************************************/
+
+
