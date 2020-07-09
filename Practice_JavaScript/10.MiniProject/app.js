@@ -66,7 +66,9 @@ var UIController = (function() {
         inputType: '.add__type',
         inputDes: '.add__description',
         inputValue: '.add__value',
-        inputBtn: '.add__btn'
+        inputBtn: '.add__btn',
+        incomeContainer: '.income__list',
+        expensesContainer: '.expenses__list'
     };
     return {
         getInput: function() {
@@ -81,8 +83,65 @@ var UIController = (function() {
             return DOMstring;
         },
 
-        addListItem: function() {
+        addListItem: function(obj, type) {
+            // Create HTML string with placeholder text
+            var html, element;
+            if (type === 'exp') {
+                element = DOMstring.expensesContainer;
+                html ='<div class="item clearfix" id="income-%id%"><div class="item__description">%description%'
+                + '</div><div class="right clearfix"><div class="item__value">%value%</div>'
+                + '<div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close'
+                + '-outline"></i></button></div></div></div>';
+            } else if(type === 'inc') {
+                element = DOMstring.incomeContainer;
+                html = '<div class="item clearfix" id="expense-%id%"><div class="item__description">%description%'
+                + ' rent</div><div class="right clearfix"><div class="item__value">%value%</div><div class='
+                + '"item__percentage">21%</div><div class="item__delete"><button class="item__delete--btn">'
+                + '<i class="ion-ios-close-outline"></i></button></div></div></div>';
+            }
+            //Replace the placeholder text with some actual data
+            html = html.replace('%id%', obj.id);
+            html = html.replace('%description%', obj.description);
+            html = html.replace('%value%', obj.value);
+            /********Checking for output html**************/
+            //console.log(html);
+            /**********************************************/
             
+            /**************************************************************************
+             * Explanation for: element.insertAdjacentHTML(position, text)
+             * Link reference: https://developer.mozilla.org/en-US/docs/Web/API/Element/insertAdjacentHTML
+             * 1. This is a method helps developer can expand the snippet html, which can
+             * be repeated, by using script
+             * 2. element can be a class or id appreared in html
+             * 3. position is where we are pointing to check for appending
+             * a. 'beforebegin' ==> apend before the element's scope
+             * 
+             * b. 'afterend' ==> apend after the element's scope
+             * 
+             * c. 'afterbegin' ==> Just inside the element's scope, before its first child
+             * <=> adding from the top <=> the new adding element always next to the begin position
+             * 
+             * d. 'beforeend': Just inside the element's scope, after its last child.
+             * <=> adding from the bottom <=> the new adding element always next to the end position
+             * 
+             * Visualization of position names:
+             * <!-- beforebegin --> 
+                <p class='' id=''> // ==> this is beginning position of element we're checking for appending
+                    <!-- afterbegin --> //third adding     ^
+                    <!-- afterbegin --> //second adding    |
+                    <!-- afterbegin --> //first adding     |
+
+                    foo // this is an example for the first child
+
+                    <!-- beforeend --> // first adding     |
+                    <!-- beforeend --> // second adding    |
+                    <!-- beforeend --> // third adding     v
+                </p> // ==> this is ending position
+               <!-- afterend -->
+             *****************************************************************************/
+            //Insert the html into the DOM
+            document.querySelector(element).insertAdjacentHTML('beforeend', html);
+            //document.querySelector(element).insertAdjacentHTML('afterbegin', html);
         }
     };
 })();
@@ -93,13 +152,20 @@ var controller = (function(BudgetCtrl, UICtrl) {
     var DOM = UICtrl.getDOMstring();
     var ctrlAddItem = function() {
         // Get the input data from the users
-        input = UICtrl.getInput();
+        input = UICtrl.getInput(); //type, description, value from user
+        /****************Testing for input*********************/
         //console.log(input);
-        // Add the item to the budget controller
-        newItem = BudgetCtrl.addItem(input.type, input.description, input.value);
-        console.log(newItem);
-        // Add the item to the UI
+        /******************************************************/
 
+        // Add the item to the budget controller
+        newItem = BudgetCtrl.addItem(input.type, input.description, input.value);//==>id, des, val
+        /****************Testing for newItem***************** */
+        //console.log(newItem);
+        /******************************************************/
+
+        // Add the item to the UI
+        UICtrl.addListItem(newItem,input.type);
+        
         // Calculate the budget
 
         // Display the budget on the UI
