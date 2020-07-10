@@ -1,6 +1,12 @@
 /* Recall: Function can return an object or function. An object's method can be a function
 One function constructor can create some objects ==> function in JS likes class concept in 
-other language programming */
+other language programming.
+
++ UIController: handling the input and output, interface of APP
+
++ AppNameController: handling the functions supporting the UIController.
+  It just likes settling everything what happens behind the scenes
+*/
 
 /* Budget Controller: Handle main features in App */
 var budgetController = (function() {
@@ -17,15 +23,25 @@ var budgetController = (function() {
         this.value = value;
     };
 
+    var calculateTotal = function(type) {
+        var sum = 0;
+        data.allItems[type].forEach(function(current){
+            sum += current.value;
+        });
+        data.totals[type] = sum;
+    };
+
     var data = {
         allItems: {
-            exp: [],
-            inc: []
+            exp: [], // each element which is an item contains id, description, and value
+            inc: [] // or it is an object created by Expense or Income function constructor
         },
         totals: {
             exp: 0,
             inc: 0
-        }
+        },
+        budget: 0,
+        percentage: -1
     };
 
     return {
@@ -52,6 +68,30 @@ var budgetController = (function() {
             data.allItems[type].push(newItem);
             return newItem;
         },
+
+        calculateBudget: function() {
+            // calculate total income and expenses
+            calculateTotal('exp');
+            calculateTotal('inc');
+            // calculate the budget = income - expenses
+            data.budget = data.totals.inc - data.totals.exp;
+            // calculate the percentage
+            if (data.totals.inc > 0) {
+                data.percentage = Math.round( (data.totals.exp/data.totals.inc)*100 );
+            } else {
+                data.percentage = -1;
+            }
+        },
+
+        getBudget: function() {
+            return {
+                budget: data.budget,
+                totalInc: data.totals.inc,
+                totalExp: data.totals.exp,
+                percentage: data.percentage
+            };
+        },
+
         testing: function() {
             console.log(newItem);
         }
@@ -173,10 +213,18 @@ var controller = (function(BudgetCtrl, UICtrl) {
 
     var updateBudget = function() {
         // Calculate the Budget
-
+        BudgetCtrl.calculateBudget();
         // Return the budget
+        var budget = BudgetCtrl.getBudget();// an object
+        /*  budget: data.budget,
+            totalInc: data.totals.inc,
+            totalExp: data.totals.exp,
+            percentage: data.percentage 
+        */
 
         // Display the budget on the UI
+        console.log(budget);
+
     };
 
     var ctrlAddItem = function() {
