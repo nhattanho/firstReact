@@ -108,7 +108,11 @@ var UIController = (function() {
         inputValue: '.add__value',
         inputBtn: '.add__btn',
         incomeContainer: '.income__list',
-        expensesContainer: '.expenses__list'
+        expensesContainer: '.expenses__list',
+        budgetLabel: '.budget__value',
+        budgetIncome: '.budget__income--value',
+        budgetExpense: '.budget__expenses--value',
+        percentageLabel: '.budget__expenses--percentage'
     };
     return {
         getInput: function() {
@@ -135,7 +139,7 @@ var UIController = (function() {
 
             /* go through the fields array and set its value is empty */
             fieldsArr.forEach(function(current, index, array) { // array argument is fieldsArr in this case
-                current.value = ''; // is pointing to the element of this array: input.add__value and input.add__description
+                current.value = ""; // is pointing to the element of this array: input.add__value and input.add__description
                 /* line above is equal:
                 document.querySelectorAll(DOMstring.inputValue).value = '';
                 document.querySelectorAll(DOMstring.inputDes).value = ''; */
@@ -143,25 +147,37 @@ var UIController = (function() {
             fieldsArr[0].focus();//first element is class .add__description
         },
 
+        displayBudget: function(obj) {
+            document.querySelector(DOMstring.budgetLabel).textContent = obj.budget;
+            document.querySelector(DOMstring.budgetIncome).textContent = obj.totalInc;
+            document.querySelector(DOMstring.budgetExpense).textContent = obj.totalExp;
+            if (obj.percentage > 0) {
+                document.querySelector(DOMstring.percentageLabel).textContent = obj.percentage + '%';
+            } else {
+                document.querySelector(DOMstring.percentageLabel).textContent = '---';
+            }
+        },
+
         addListItem: function(obj, type) {
             // Create HTML string with placeholder text
             var html, element;
-            if (type === 'exp') {
-                element = DOMstring.expensesContainer;
+            if (type === 'inc') {
+                element = DOMstring.incomeContainer;
                 html ='<div class="item clearfix" id="income-%id%"><div class="item__description">%description%'
                 + '</div><div class="right clearfix"><div class="item__value">%value%</div>'
                 + '<div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close'
                 + '-outline"></i></button></div></div></div>';
-            } else if(type === 'inc') {
-                element = DOMstring.incomeContainer;
+            } else if(type === 'exp') {
+                element = DOMstring.expensesContainer;
                 html = '<div class="item clearfix" id="expense-%id%"><div class="item__description">%description%'
-                + ' rent</div><div class="right clearfix"><div class="item__value">%value%</div><div class='
+                + '</div><div class="right clearfix"><div class="item__value">%value%</div><div class='
                 + '"item__percentage">21%</div><div class="item__delete"><button class="item__delete--btn">'
                 + '<i class="ion-ios-close-outline"></i></button></div></div></div>';
             }
             //Replace the placeholder text with some actual data
             html = html.replace('%id%', obj.id);
             html = html.replace('%description%', obj.description);
+            //console.log(obj.description);
             html = html.replace('%value%', obj.value);
             /********Checking for output html**************/
             //console.log(html);
@@ -223,7 +239,8 @@ var controller = (function(BudgetCtrl, UICtrl) {
         */
 
         // Display the budget on the UI
-        console.log(budget);
+        //console.log(budget);
+        UICtrl.displayBudget(budget);
 
     };
 
@@ -235,25 +252,22 @@ var controller = (function(BudgetCtrl, UICtrl) {
         /******************************************************/
 
         // Validate inputs
-        if (input.description !== '' && !isNaN(input.value) && input.value > 0) {
+        if (input.description !== "" && !isNaN(input.value) && input.value > 0) {
 
-        // Add the item to the budget controller
-        newItem = BudgetCtrl.addItem(input.type, input.description, input.value);//==>id, des, val
-        /****************Testing for newItem***************** */
-        //console.log(newItem);
-        /******************************************************/
+            // Add the item to the budget controller
+            newItem = BudgetCtrl.addItem(input.type, input.description, input.value);//==>id, des, val
+            /****************Testing for newItem***************** */
+            //console.log(newItem);
+            /******************************************************/
 
-        // Add the item to the UI
-        UICtrl.addListItem(newItem,input.type);
+            // Add the item to the UI
+            UICtrl.addListItem(newItem,input.type);
 
-        // Clear the fields
-        UICtrl.clearField();
+            // Clear the fields
+            UICtrl.clearField();
 
-        // Calculate the budget
-        updateBudget();
-
-        // Display the budget on the UI
-
+            // Calculate the budget
+            updateBudget();
         }
     };
 
@@ -272,6 +286,12 @@ var controller = (function(BudgetCtrl, UICtrl) {
     return {
         init: function() {
             console.log('Application has started!');
+            UICtrl.displayBudget({
+                budget: 0,
+                totalInc: 0,
+                totalExp: 0,
+                percentage: -1 
+            });
             setupEventListener();
         }
     };
