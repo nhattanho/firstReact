@@ -62,7 +62,7 @@ var budgetController = (function() {
 /* UI Controller: Handle features relating to the input, output of GUI */
 var UIController = (function() {
     // Created an object: an object was used by multiple functions
-    var DOMstring = {
+    var DOMstring = { // contains all necessary classes or ids
         inputType: '.add__type',
         inputDes: '.add__description',
         inputValue: '.add__value',
@@ -75,12 +75,32 @@ var UIController = (function() {
             return {
                 type: document.querySelector(DOMstring.inputType).value,
                 description: document.querySelector(DOMstring.inputDes).value,
-                value: document.querySelector(DOMstring.inputValue).value
+                value: parseFloat(document.querySelector(DOMstring.inputValue).value)
             }
         },
 
         getDOMstring: function() {
             return DOMstring;
+        },
+
+        clearField: function() {
+            var fields, fieldsArr;
+            /* fields is a NodeList [ input.add__description, , input.add__value] */
+            fields = document.querySelectorAll(DOMstring.inputDes + ', ' + DOMstring.inputValue);
+            //console.log(fields);
+
+            /* fieldsArr is an array has 2 element [ input.add__description, input.add__value ] */
+            fieldsArr = Array.prototype.slice.call(fields); // slice is a method of array
+            //console.log(fieldsArr);
+
+            /* go through the fields array and set its value is empty */
+            fieldsArr.forEach(function(current, index, array) { // array argument is fieldsArr in this case
+                current.value = ''; // is pointing to the element of this array: input.add__value and input.add__description
+                /* line above is equal:
+                document.querySelectorAll(DOMstring.inputValue).value = '';
+                document.querySelectorAll(DOMstring.inputDes).value = ''; */
+            });
+            fieldsArr[0].focus();//first element is class .add__description
         },
 
         addListItem: function(obj, type) {
@@ -150,12 +170,24 @@ var UIController = (function() {
 var controller = (function(BudgetCtrl, UICtrl) {
     var input, newItem;
     var DOM = UICtrl.getDOMstring();
+
+    var updateBudget = function() {
+        // Calculate the Budget
+
+        // Return the budget
+
+        // Display the budget on the UI
+    };
+
     var ctrlAddItem = function() {
         // Get the input data from the users
         input = UICtrl.getInput(); //type, description, value from user
         /****************Testing for input*********************/
         //console.log(input);
         /******************************************************/
+
+        // Validate inputs
+        if (input.description !== '' && !isNaN(input.value) && input.value > 0) {
 
         // Add the item to the budget controller
         newItem = BudgetCtrl.addItem(input.type, input.description, input.value);//==>id, des, val
@@ -165,10 +197,16 @@ var controller = (function(BudgetCtrl, UICtrl) {
 
         // Add the item to the UI
         UICtrl.addListItem(newItem,input.type);
-        
+
+        // Clear the fields
+        UICtrl.clearField();
+
         // Calculate the budget
+        updateBudget();
 
         // Display the budget on the UI
+
+        }
     };
 
     /* Handling for click button or press the key */
