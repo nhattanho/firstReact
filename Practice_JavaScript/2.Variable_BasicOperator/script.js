@@ -7,6 +7,8 @@
 data type will be automatically assigned to variables.
 5. Null: Non-existent */
 
+
+/******************************************Using in ES5*************************************************/
 var firstName = "Nhat"; // As a string
 console.log(firstName);
 
@@ -82,3 +84,58 @@ console.log(priority); // ==> - operator has higher priority than >=
 var x, y;
 x = y = (10+2) - 5 * 2;
 console.log(x, y);
+
+/******************************************Using in ES6*************************************************/
+// Using let and const
+
+// ES5
+function introduction5(answer) {
+    if (answer) {
+        console.log(name);
+        var name = 'honhattan';
+        console.log('my name is ' + name); // work fine
+    }
+    console.log('my name is ' + name); // still work fine
+}
+introduction5(true);
+// ES6
+function introduction6(answer) {
+    if (answer) {
+        console.log(name);
+        let name = 'honhattan'; // just exist in if block-scope, not in function block
+        //const name = 'honhattan' // const declares a constant variable which cannot be changed
+        console.log('my name is ' + name); // work fine
+    }
+    console.log('my name is ' + name); // but does't work here, because let and const declare a 
+    //variable in a block scope that means the variable just exists in a block that was wrapped in if {}
+}
+
+// Continue to practicing let and const
+let i = 8;
+for (let i = 0; i < 15; i++) { // this let i just use for this for-block
+    console.log(i); // 0->14 
+}
+console.log(i); // 8 ==> i of line 114
+
+for (var a = 0; a < 10; a++) { // this var a for function scope
+    console.log(a); // 0 -> 9
+}
+console.log(a); // 10
+
+function calMyAge(birth) {
+    return 2020 - birth;
+}
+
+let name1 = 'nhat tanho';
+console.log(`My name is ${name1}, he was born in ${calMyAge(1992)}`);
+
+console.log(name1.startsWith('n')); // true
+console.log(name1.endsWith('ho')); // true
+console.log(name1.includes(' ')); // true // checking in the middle
+console.log(name1.includes('jo')); // false
+console.log(name1.repeat(5)); //
+
+let name2 = 'nhatho';
+console.log(`${name2} `.repeat(2)); //nhatho nhatho
+
+

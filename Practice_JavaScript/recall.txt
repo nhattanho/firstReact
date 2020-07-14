@@ -14,7 +14,7 @@
 
     document.querySelector(element).insertAdjacentHTML('beforeend', html);
 
-+ Nodelist doesn't have forEach method while Array does ==> convert a Nodelist to an Array by using
++ Nodelist doesn't have forEach and map method while Array does ==> convert a Nodelist to an Array by using
 slice and call method, example:
 
     fields = document.querySelectorAll(DOMstring.inputDes + ', ' + DOMstring.inputValue); // return a Nodelist
@@ -23,4 +23,24 @@ slice and call method, example:
         current.value = "";
     }
     fieldsArr[0].focus();
+
++ The difference between var at ES5 and let/const at ES6:
+    - var <=> function scope while let and const <=> block scope. Hoisting in variable expression <=> we have to
+    declare before we call it. That means no matter we are using var or let/const, we need to declare before using
+    it, but the difference is with var when we call the variable before we declare it, it just warning about this
+    variable is undefined ==> it's really dangerous. Therefore, to prevent this happening, we can use let/const
+    because, with the same case as using var, it would throw an error to the programmer.
+
++ Using backtick ` `  to combine the string and variable when we want to printOut, example:
+    let name = 'nhat tanho';
+    console.log('My name is ' + name + ', he is  ' + age); // ES5
+    console.log(`My name is ${name}, he is ${age}`); //ES6
+    console.log(name1.startsWith('n')); // true
+    console.log(name1.endsWith('ho')); // true
+    console.log(name1.includes(' ')); // true // checking in the middle
+    console.log(name1.includes('jo')); // false
+    console.log(name1.repeat(5)); //
+
+    let name2 = 'nhatho';
+    console.log(`${name2} `.repeat(2)); //nhatho nhatho
 
