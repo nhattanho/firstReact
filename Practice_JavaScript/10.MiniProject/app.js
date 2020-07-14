@@ -154,7 +154,8 @@ var UIController = (function() {
         budgetExpense: '.budget__expenses--value',
         percentageLabel: '.budget__expenses--percentage',
         container: '.container',
-        expPercentage: '.item__percentage'
+        expPercentage: '.item__percentage',
+        dateLabel: '.budget__title--month'
     };
 
     var formatNumber = function(num, type) {
@@ -163,12 +164,11 @@ var UIController = (function() {
         var splitNum = num.split('.'); // 12345678.00
         var temp, i;
         var partInt = splitNum[0]; // 12345678
-
         if (partInt.length > 3) {
             var module = partInt.length % 3;
             temp = partInt.substr(0, module) + ',';
             for (i = module; i < partInt.length - 3; i+=3) {
-                temp = partInt.substr(i, 3) + ',';
+                temp = partInt.substr(i, 3) + ','; // i: position, 3 is number of elements
             }
             temp += partInt.substr(i, partInt.length - i);
         } else {
@@ -178,6 +178,12 @@ var UIController = (function() {
         if (type === 'inc') temp = '+' + temp;
         else if (type === 'exp') temp = '-' + temp;
         return temp;
+    };
+
+    var nodelistForEach = function(list, callback) {
+        for(var i = 0; i < list.length; i++) {
+            callback(list[i], i);
+        }
     };
 
     return {
@@ -298,16 +304,50 @@ var UIController = (function() {
             el.parentNode.removeChild(el); // get the parent, and using the parent to remove this child
         },
 
+        displayMonth: function() {
+            var today, year;
+            today = new Date();
+            year = today.getFullYear()+'/'+(today.getMonth()+1)+'/'+today.getDate();
+            document.querySelector(DOMstring.dateLabel).textContent = year;
+            //console.log(year);
+        },
+
+        changeType: function() {
+            var fields = document.querySelectorAll(DOMstring.inputType + ',' 
+                                                + DOMstring.inputDes + ',' 
+                                                + DOMstring.inputValue + ','
+                                                + DOMstring.inputBtn); // RETURN A NODEList
+            var checkChange = 0;
+            nodelistForEach(fields, function(cur, index) {
+                if (index == 0) {
+                    if (cur.value == 'exp') checkChange = 1;
+                }
+                if (cur.type !== 'submit') {
+                    if (checkChange === 1)
+                        cur.classList.add('red-focus');
+                    else
+                        cur.classList.remove('red-focus');
+                }
+                else {
+                    if (checkChange === 1)
+                        cur.classList.add('red');
+                    else
+                        cur.classList.remove('red');
+                }
+            });
+        },
+
         displayPercentages: function(percentages) {
             var fields = document.querySelectorAll(DOMstring.expPercentage); // A Nodelist, selectAll because we don't know
             //many class expPercentage will be on the App 
 
+            /*
             //fieldsArr = Array.prototype.slice.call(fields); // we can do this way, or as below:
             var nodelistForEach = function(list, callback) {
                 for(var i = 0; i < list.length; i++) {
                     callback(list[i], i);
                 }
-            };
+            }; */
 
             nodelistForEach(fields, function(current, index) { //current = list[i] and index = i
                 if (percentages[index] > 0) {
@@ -316,6 +356,10 @@ var UIController = (function() {
                     current.textContent = '---';
                 }
             });
+        },
+
+        setInputType: function() {
+            document.querySelector(DOMstring.inputType).value = 'inc';
         }
     };
 })();
@@ -415,11 +459,14 @@ var controller = (function(BudgetCtrl, UICtrl) {
             }
         });
         document.querySelector(DOM.container).addEventListener('click', ctrDeleteItem);
+        document.querySelector(DOM.inputType).addEventListener('change', UICtrl.changeType);
     };    
 
     return {
         init: function() {
             console.log('Application has started!');
+            UICtrl.setInputType();
+            UICtrl.displayMonth();
             UICtrl.displayBudget({
                 budget: 0,
                 totalInc: 0,
