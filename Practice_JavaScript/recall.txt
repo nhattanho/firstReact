@@ -1,0 +1,26 @@
++ Passing Primitive vs Object <=> passing value vs reference into a function
+
++ Closure when happing a function returns a function <=> static variable
+
++ Hoisting <=> function/variable declaration vs function expression
+
++ Call css class from js script by using classList method:
+
+    document.querySelectorAll('.name_of_class_inHTML').classList.add('className_offCSS');
+    document.querySelectorAll('.name_of_class_inHTML').classList.remove('className_offCSS');
+    document.querySelectorAll('.name_of_class_inHTML').classList.toggle('className_offCSS');
+
++ Adding div section for HTML by using script js ==> using insertAdjacentHTML, example:
+
+    document.querySelector(element).insertAdjacentHTML('beforeend', html);
+
++ Nodelist doesn't have forEach method while Array does ==> convert a Nodelist to an Array by using
+slice and call method, example:
+
+    fields = document.querySelectorAll(DOMstring.inputDes + ', ' + DOMstring.inputValue); // return a Nodelist
+    fieldsArr = Array.prototype.slice.call(fields); // An array already
+    fieldsArr.forEach(function(current, index, array) {
+        current.value = "";
+    }
+    fieldsArr[0].focus();
+
