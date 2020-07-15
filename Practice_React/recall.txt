@@ -1,0 +1,5 @@
++ React likes an external library of JS which using new featurs of JS called ES6
+
++ React-dom is a rendering to convert components in React to a real DOM
+
++ Babel is a JS pre-processor to compile the code of React to code which can run successfully on Browser
