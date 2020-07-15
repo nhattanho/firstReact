@@ -44,3 +44,77 @@ slice and call method, example:
     let name2 = 'nhatho';
     console.log(`${name2} `.repeat(2)); //nhatho nhatho
 
++ In method map or forEach of Array in JS, it has already setup the order for the arguments of the callback function,
+for example:
+    // ==> the cur is a current element in a array
+    // ==> index is a position of this element
+    // arr is itself 
+    array.map( function(cur, index, arr){
+        // do something here
+    } );
+
++ Note: we need to be careful when using the this keyword for an object that have many functions in its.
+Remarkable: This problem will never happen in a function, just focus on object for this case.
+Example:
+var box5 = {
+    color: 'green',
+    position: 1,
+    clickMe: function() {
+        var node = document.querySelector('.green');
+        console.log(this.position); // it actually is pointing to the object box5
+        node.addEventListener('click', function() {
+            //console.log(this.position); ==> this now is pointing to the window object, bc it now is not
+            // in a method clickMe of the box5 object, it is on the regular function that is a callback function
+            console.log(`You have just clicked on the box number ${this.position}`); // it also points to window object
+        });
+    }
+};
+box5.clickMe();
+
+==> We can fix in two ways:
+1. Using hack or working around
+adding line: var self = this; 
+var box5 = {
+    color: 'green',
+    position: 1,
+    clickMe: function() {
+        var node = document.querySelector('.green');
+        var self = this;
+        // var pos = this.position; // because this in this line is a keyword of method of object box5
+        node.addEventListener('click', function() {
+            console.log(`You have just clicked on the box number ${self.position}`);
+        });
+    }
+};
+2. Using arrow function in ES6 
+var box6 = {
+    color: 'green',
+    position: 1,
+    clickMe: function() {
+        var node = document.querySelector('.blue');
+        node.addEventListener('click', ()=> { // arrow function shares the this keyword with the parent function
+        // in this case, it shares this keyword with the clickMe function that is a method of object box6, so this points to
+        // the object box6
+            console.log(`You have just clicked on the box number ${this.position} by using arrow function feature!s`);
+        });
+    }
+};
+box6.clickMe();
+
+However , if we use:
+var box6 = {
+    color: 'green',
+    position: 1,
+    clickMe: ()=> {
+        var node = document.querySelector('.blue');
+        node.addEventListener('click', ()=> {
+            console.log(`You have just clicked on the box number ${this.position} by using arrow function feature!s`);
+        });
+    }
+};
+
+We can see this keyword of click event function will be shared with the clickMe function, then it will continue 
+sharing with the function in global that is outside of the object box6. Therefore, this keyword now doesn't point
+to the box6 object. Instead of that, it is pointing to the window object.
+
++ Understanding about call, apply, and bind method
