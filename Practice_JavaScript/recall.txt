@@ -25,7 +25,9 @@ slice and call method, example:
     fieldsArr[0].focus();
 
 Or:
-    fieldsArr = Array.from(fields) // In ES6
+    1. var newfields = [h, ...fields]; // Spread Operator in ES6, garthering some nodelists into an array
+       fieldsArr = Array.from(newfields);
+    2. fieldsArr = Array.from(fields) // In ES6
 Besides, in ES6, array also has some method like:
 
     console.log(ages.findIndex(cur => {
