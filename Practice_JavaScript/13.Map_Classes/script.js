@@ -147,7 +147,7 @@ class Person61 {
 
 class Student61 extends Person61 {
     constructor(name, year, job, vehicle, country){
-        super(name, year, job);
+        super(name, year, job); // For ES6, we have to call super before we handle anything in child class
         this.vehicle = vehicle;
         this.country = country;
     }
@@ -162,3 +162,42 @@ console.log(nhat.calAge());// inherit form its parent class
 nhat.changeCar('BMW'); // its own method
 console.log(nhat.vehicle); 
 
+/****************************************ES7*********************************** */
+class Human {
+    gender = 'male'; // in ES7, we don't need to use constructor
+    /* ES7 */
+    printGender = () => { //like function expression
+        console.log(this.gender);
+    };
+
+   /* Recall ES6
+   printGender() { //like function declaration
+       console.log(this.gender);
+   }
+   */
+}
+let object = new Human();
+object.printGender(); // male
+console.log(object.gender);// male
+
+class Woman extends Human {// For ES7, in children class, we don't have to run super(..) to call the parent class
+    gender = 'female'; 
+    age = 30;
+    job = 'tutor';
+
+    /* Trying to use function syntax of ES6 in class syntax of ES7 ==> it works perfectly */
+    printJob() {
+        console.log(this.job);  
+    }
+
+    /*
+    printJob = () => {
+        console.log(this.job);
+    };
+    */
+}
+
+let Jacy = new Woman();
+console.log(`age is ${Jacy.age}`);
+Jacy.printJob();
+Jacy.printGender();
