@@ -1,21 +1,21 @@
-+ Passing Primitive vs Object <=> passing value vs reference into a function
+/*+ Passing Primitive vs Object <=> passing value vs reference into a function*/
 
-+ Closure when happing a function returns a function <=> static variable
+/*+ Closure when happing a function returns a function <=> static variable*/
 
-+ Hoisting <=> function/variable declaration vs function expression
+/*+ Hoisting <=> function/variable declaration vs function expression*/
 
-+ Call css class from js script by using classList method:
+/*+ Call css class from js script by using classList method:*/
 
     document.querySelectorAll('.name_of_class_inHTML').classList.add('className_offCSS');
     document.querySelectorAll('.name_of_class_inHTML').classList.remove('className_offCSS');
     document.querySelectorAll('.name_of_class_inHTML').classList.toggle('className_offCSS');
 
-+ Adding div section for HTML by using script js ==> using insertAdjacentHTML, example:
+/*+ Adding div section for HTML by using script js ==> using insertAdjacentHTML, example:*/
 
     document.querySelector(element).insertAdjacentHTML('beforeend', html);
 
-+ Nodelist doesn't have forEach and map method while Array does ==> convert a Nodelist to an Array by using
-slice and call method, example:
+/*+ Nodelist doesn't have forEach and map method while Array does ==> convert a Nodelist to an Array by using
+slice and call method, example:*/
 
     fields = document.querySelectorAll(DOMstring.inputDes + ', ' + DOMstring.inputValue); // return a Nodelist
     fieldsArr = Array.prototype.slice.call(fields); // An array already
@@ -24,7 +24,7 @@ slice and call method, example:
     }
     fieldsArr[0].focus();
 
-Or:
+//Or:
     1. var newfields = [h, ...fields]; // Spread Operator in ES6, garthering some nodelists into an array
        fieldsArr = Array.from(newfields);
     2. fieldsArr = Array.from(fields) // In ES6
@@ -36,7 +36,7 @@ Besides, in ES6, array also has some method like:
 
     console.log(ages.find(cur => cur >= 18)); // just show the first element in a array that satisfies the requirement
 
-However, if we still handle directly on Nodelist, we can do:
+/*However, if we still handle directly on Nodelist, we can do:*/
     var fields = document.querySelectorAll(DOMstring.expPercentage);
     var nodelistForEach = function(list, callback) {
             for(var i = 0; i < list.length; i++) {
@@ -53,14 +53,14 @@ However, if we still handle directly on Nodelist, we can do:
     });
 
 
-+ The difference between var at ES5 and let/const at ES6:
+/*+ The difference between var at ES5 and let/const at ES6:
     - var <=> function scope while let and const <=> block scope. Hoisting in variable expression <=> we have to
     declare before we call it. That means no matter we are using var or let/const, we need to declare before using
     it, but the difference is with var when we call the variable before we declare it, it just warning about this
     variable is undefined ==> it's really dangerous. Therefore, to prevent this happening, we can use let/const
-    because, with the same case as using var, it would throw an error to the programmer.
+    because, with the same case as using var, it would throw an error to the programmer.*/
 
-+ Using backtick ` `  to combine the string and variable when we want to printOut, example:
+/*+ Using backtick ` `  to combine the string and variable when we want to printOut, example:*/
     let name = 'nhat tanho';
     console.log('My name is ' + name + ', he is  ' + age); // ES5
     console.log(`My name is ${name}, he is ${age}`); //ES6
@@ -73,8 +73,8 @@ However, if we still handle directly on Nodelist, we can do:
     let name2 = 'nhatho';
     console.log(`${name2} `.repeat(2)); //nhatho nhatho
 
-+ In method map or forEach of Array in JS, it has already setup the order for the arguments of the callback function,
-for example:
+/*+ In method map or forEach of Array in JS, it has already setup the order for the arguments of the callback function,
+for example:*/
     // ==> the cur is a current element in a array
     // ==> index is a position of this element
     // arr is itself 
@@ -82,9 +82,14 @@ for example:
         // do something here
     } );
 
-+ Note: we need to be careful when using the this keyword for an object that have many functions in its.
+/*+ Understanding about method filter of Array*/
+    const newArr = [34, 67, 89, 40];
+    const get = newArr.filter(el => el < 67);
+    console.log(get); // 34, 40
+
+/*+ Note: we need to be careful when using the this keyword for an object that have many functions in its.
 Remarkable: This problem will never happen in a function, just focus on object for this case.
-Example:
+Example:*/
 var box5 = {
     color: 'green',
     position: 1,
@@ -100,9 +105,9 @@ var box5 = {
 };
 box5.clickMe();
 
-==> We can fix in two ways:
+/*==> We can fix in two ways:
 1. Using hack or working around
-adding line: var self = this; 
+adding line: var self = this; */
 var box5 = {
     color: 'green',
     position: 1,
@@ -129,7 +134,7 @@ var box51 = {
     }
 };
 
-2. Using arrow function in ES6 
+/*2. Using arrow function in ES6*/
 var box6 = {
     color: 'green',
     position: 1,
@@ -144,7 +149,7 @@ var box6 = {
 };
 box6.clickMe();
 
-However , if we use:
+/*However , if we use:*/
 var box6 = {
     color: 'green',
     position: 1,
@@ -156,18 +161,18 @@ var box6 = {
     }
 };
 
-We can see this keyword of click event function will be shared with the clickMe function, then it will continue 
+/*We can see this keyword of click event function will be shared with the clickMe function, then it will continue 
 sharing with the function in global that is outside of the object box6. Therefore, this keyword now doesn't point
-to the box6 object. Instead of that, it is pointing to the window object.
+to the box6 object. Instead of that, it is pointing to the window object.*/
 
-+ Understanding about call, apply, and bind method (can use bind to pass object as an argument into callback function)
+/*+ Understanding about call, apply, and bind method (can use bind to pass object as an argument into callback function)*/
 
-+ Understanding about Destructuring: for array, object, function
+/*+ Understanding about Destructuring: for array, object, function
     - let anArray = Array.from(Nodelist)
     - for(let cur of anArray) {} or for (let cur of Nodelists) {}
-    - let [name, age] = ['nhat', 28];
+    - let [name, age] = ['nhat', 28]; */
 
-+ Using Map
+/*+ Using Map
     - let question = new Map();
     - question.set(1, 'red'); // key, value
     - question.get(1)
@@ -196,9 +201,9 @@ to the box6 object. Instead of that, it is pointing to the window object.
             if (typeof(key) === 'number') {
                 console.log(`Answer ${key}: ${value}`);
             }
-        }
+        } */
 
-+ Classes in ES6
+/*+ Classes in ES6*/
     class Person6 {
         constructor(name, year, job) {
             this.name = name;
@@ -224,7 +229,7 @@ to the box6 object. Instead of that, it is pointing to the window object.
     Person6.sayHello(); // this work fine
     nhat6.sayHello(); // so, this line will have the error
 
-+ //Pass a argument for a callback function which called by setTimeout function:
+/*+ Pass a argument for a callback function which called by setTimeout function:*/
     setTimeout( (id) => {
         let obj = {name: 'nhatho', age: 29};
         console.log(`this character ${obj.name} has grade ${id}`);

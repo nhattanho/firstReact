@@ -77,6 +77,29 @@ let getarr = newvar.map( (...arguments) => {
 });
 console.log(`testing for rest parameters ${getarr}`);
 
+// ==> next testing for function
+const test = (...args) => {
+    return args.filter(el => el === 1);
+};
+console.log(test(1, 2, 3)); // 1
+
+const newArr = [34, 67, 89, 40];
+const get = newArr.filter(el => el < 67); // return an array which have the numbers less than 67
+console.log(get); // 34, 40
+
+//Apply Rest Operator for Objects
+console.log('**********************Apply for Objects****************************');
+const person1 = {
+    name: 'Nhat'
+};
+
+const person2 = {
+    ...person1,
+    age: 29
+};
+console.log(person2);
+console.log('********************************************************************');
+
 /*******************************Default Operator****************************/
 //ES5
 function Student(first, last, age, country) {
