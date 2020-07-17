@@ -1,4 +1,11 @@
 /*+ Passing Primitive vs Object <=> passing value vs reference into a function*/
+/* Primitive: Numbers, strings, booleans, Undefined, Null
+   Object: Arrays, Functions, Objects, Dates, Wrapper function for (Numbers, strings, booleans) */
+   var arr = [1, 2, 3, 4];
+    var newarr = arr;
+    console.log(newarr);// [1, 2, 3, 4]
+    arr[2] = 5;
+    console.log(newarr);// [1, 2, 5, 4]
 
 /*+ Closure when happing a function returns a function <=> static variable*/
 

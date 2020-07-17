@@ -94,9 +94,12 @@ const person1 = {
 };
 
 const person2 = {
-    ...person1,
+    ...person1, //just copy all properties of person1 to person2, not referencing
     age: 29
 };
+console.log(person2);
+person1.name = 'Tan';
+console.log(person1);
 console.log(person2);
 console.log('********************************************************************');
 
