@@ -223,3 +223,12 @@ to the box6 object. Instead of that, it is pointing to the window object.
 
     Person6.sayHello(); // this work fine
     nhat6.sayHello(); // so, this line will have the error
+
++ //Pass a argument for a callback function which called by setTimeout function:
+    setTimeout( (id) => {
+        let obj = {name: 'nhatho', age: 29};
+        console.log(`this character ${obj.name} has grade ${id}`);
+    }, 1000, grade[1]); // grade[1] will be passed in to callback function as id
+    /* Note: in above case, setTimeout has 3 arguments: callback function which has one parameter called id,
+    time setting for timeout, and the last is grade[1]. In that, grade[1] was treated as id that is a argument
+    of callback function */
