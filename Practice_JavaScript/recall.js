@@ -276,22 +276,26 @@ Example: */
 /*==> getGra1 returns a promise, so it can use then and catch method as well */
 
     async function getGrades() { // async returns a promise
-        console.log('We are in async function');
-        const getGra = await grades1; // getGra will hold the array which was returned from grades1 promise
-        console.log(getGra);
-        const getInfo = await getGra1(getGra[2]); // getInfor now is a string returned by getGra1 function
-        console.log(getInfo);
-        /*If at here we return the getInfo like: "return getInfo;", and outside of function, we want to print
-        this by using: "console.log(getGrades())" ==> it doesn't work correctly because all promises is running
-        in the backgournd, and getInfo hasn't got the result already, so return command will return nothing,==>
-        "console.log(getGrades())" can not print out the actual value. Therefore, we have to wait untill the getinfo
-        receives the result from the promise. We can do by using getGrades().then() */
-        console.log('We are end-in async function');
-        let a = 5;
-        let b = 6;
-        console.log(a+b);
+        try {
+            console.log('We are in async function');
+            const getGra = await grades1; // getGra will hold the array which was returned from grades1 promise
+            console.log(getGra);
+            const getInfo = await getGra1(getGra[2]); // getInfor now is a string returned by getGra1 function
+            console.log(getInfo);
+            /*If at here we return the getInfo like: "return getInfo;", and outside of function, we want to print
+            this by using: "console.log(getGrades())" ==> it doesn't work correctly because all promises is running
+            in the backgournd, and getInfo hasn't got the result already, so return command will return nothing,==>
+            "console.log(getGrades())" can not print out the actual value. Therefore, we have to wait untill the getinfo
+            receives the result from the promise. We can do by using getGrades().then() */
+            console.log('We are end-in async function');
+            let a = 5;
+            let b = 6;
+            console.log(a+b);
 
-        return getGra;
+            return getGra;
+        } catch(err){
+            console.log(err);
+        }
     }
     getGrades().then(result => { //result is getGra which was returned by getGrades() function
         console.log(result);
