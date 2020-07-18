@@ -1,5 +1,34 @@
 + React likes an external library of JS which using new featurs of JS called ES6
 
-+ React-dom is a rendering to convert components in React to a real DOM
++ React-dom is a rendering to convert components in React to a real DOM or insert the code into html file
+import ReactDOM from 'react-dom';
+ReactDOM.render(app, document.querySelector('#app')); // checking in the index.htm where the element
+//having the id is app and insert this part by function app which has been rendered already.
 
-+ Babel is a JS pre-processor to compile the code of React to code which can run successfully on Browser
++ import React from 'react'; //it is library supporting to write the xml in javascript <=> JSX
+
++ Babel is a JS pre-processor to compile the code of React to code which can run successfully on all Browsers
+
++ES6 Modules helps us separate the project to several files/modules ==> easier to manage and mantain the code
+==> However, the problem is browsers do not really support this features, so we have to bundle these modules
+become a single file ==> using Webpack to bundle modules.
+
++ "react-scripts": "3.4.1" //Don't worry about Webpack and babel
+
++ "start": "react-scripts start",
+  "build": "react-scripts build", ==> all code from source folder will be build and located in build folder used by Browsers
+  "test": "react-scripts test",
+  "eject": "react-scripts eject" ==> take out all of file hidden from us included scripts and config folder
+
++ Public folder: all files where the Browser needs
+
++ Src folder: the code of application 
+
++ Package.json: save all information of Application
+
++ <p>{this.state.string}<code>src/App.js</code> and save to reload.</p> ==> in xml, using {}, we can write
+JS inside it
+
++ In xml: <header className="App-header"> | <button onClick={()=>{ this.setState({string: 'honhattan'})}}>Change</button>
+In html: <header class="App-header">    |   <button onclick={()=>{ this.setState({string: 'honhattan'})}}>Change</button>
+

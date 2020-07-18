@@ -19,7 +19,7 @@
 
 //JSX1
 function Person() {
-    // Babel preprocessor convert this part into JS code
+    // Babel preprocessor convert this part into JS code even for old JS version
     return (
        <div className="person"
             <h1>Nhat</h1>
@@ -40,7 +40,7 @@ ReactDOM.render(<Person />, document.querySelector('#p1'));
 
 //JSX2
 function Person(props) {
-    // Babel preprocessor convert this part into JS code which work on browser
+    // Babel preprocessor convert this part into JS code which work on every browser
     return (
        <div className="person"
             <h1>{props.name}</h1>
@@ -75,4 +75,6 @@ var app = (
     <Person name="Tan" age="28"/>
 );
 
-ReactDOM.render(app, document.querySelector('#app'));
+ReactDOM.render(app, document.querySelector('#app')); // checking in the index.htm where the element
+//having the id is app and replace this part by function app which has been rendered already.
+
