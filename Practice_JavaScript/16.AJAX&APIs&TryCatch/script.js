@@ -12,8 +12,8 @@ DELETE....))    |              v
 //                 return result.json(); // return a promise, and in promise, it contains a json data
 //         })
 //         .then(data =>{
-//                 console.log(data); // data is json data <=> an array object
-//                 let today = data.consolidated_weather;
+//                 console.log(data); // data is json data <=> an object
+//                 let today = data.consolidated_weather; // today is an array
 //                 let max = 0, min = 0;
 //                 console.log(today.length);
 //                 today.forEach( (el, index) => {
@@ -45,8 +45,8 @@ async function getTemperature(id) {
         try {
                 const result = await fetch(`https://cors-anywhere.herokuapp.com/https://www.metaweather.com/api/location/${id}/`);
                 let data = await result.json();
-                // console.log(data); // data is json data <=> an array object
-                let today = data.consolidated_weather;
+                console.log(data); // data is json data <=> an object
+                let today = data.consolidated_weather; // today is an array
                 //let max = 0, min = 0; //=> just comment this line to create and testing for the error
                 //console.log(today.length);
                 today.forEach( (el, index) => {
