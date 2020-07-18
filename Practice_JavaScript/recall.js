@@ -1,3 +1,7 @@
+/*+ Fix decimal number: a.toFixed(2) */
+
+/*+ Jason mehtod also returns a promise*/
+
 /*+ Passing Primitive vs Object <=> passing value vs reference into a function*/
 /* Primitive: Numbers, strings, booleans, Undefined, Null
    Object: Arrays, Functions, Objects, Dates, Wrapper function for (Numbers, strings, booleans) */
@@ -244,3 +248,54 @@ to the box6 object. Instead of that, it is pointing to the window object.*/
     /* Note: in above case, setTimeout has 3 arguments: callback function which has one parameter called id,
     time setting for timeout, and the last is grade[1]. In that, grade[1] was treated as id that is a argument
     of callback function */
+
+/*+ if an object/function is a promise or return a promise or a async function ==> it can use the method then
+and catch. However, if we want to await an object/function ==> this object/function has to be a promise or
+return a promise. A async function cannot be awaited by the other which outside the async function. On the 
+other word, await is only valid in async functions and async generators
+Example: */
+    let grades1 = new Promise( (resolve, reject) => {
+        setTimeout( () => {
+            resolve([1, 56, 74,90]);// assume the promise successfully finish and using resolve to return the data
+            // assume the promise was failed
+            //reject();
+        }, 1000);
+    });
+    grades1.then().catch();
+/*==> grades1 is a promise, so it can use then and catch method */
+    let getGra1 = function(grade) {
+        return new Promise( (resolve, reject) => {
+            setTimeout( (grade) => {
+                let obj = {name: 'nhatho', age: 29};
+                // this string will be returned when this promise finish
+                resolve(`this character ${obj.name} has grade ${grade}`); 
+            }, 8000, grade);
+        });
+    };
+    getGra1().then().catch();
+/*==> getGra1 returns a promise, so it can use then and catch method as well */
+
+    async function getGrades() { // async returns a promise
+        console.log('We are in async function');
+        const getGra = await grades1; // getGra will hold the array which was returned from grades1 promise
+        console.log(getGra);
+        const getInfo = await getGra1(getGra[2]); // getInfor now is a string returned by getGra1 function
+        console.log(getInfo);
+        /*If at here we return the getInfo like: "return getInfo;", and outside of function, we want to print
+        this by using: "console.log(getGrades())" ==> it doesn't work correctly because all promises is running
+        in the backgournd, and getInfo hasn't got the result already, so return command will return nothing,==>
+        "console.log(getGrades())" can not print out the actual value. Therefore, we have to wait untill the getinfo
+        receives the result from the promise. We can do by using getGrades().then() */
+        console.log('We are end-in async function');
+        let a = 5;
+        let b = 6;
+        console.log(a+b);
+
+        return getGra;
+    }
+    getGrades().then(result => { //result is getGra which was returned by getGrades() function
+        console.log(result);
+    });
+/*==> getGrades is a async function, that will return a promise, so it also can use a then/catch method.
+Besides, we can see that the await just appears in async function, and it has to be a promise or something
+returns a promise*/
