@@ -32,3 +32,5 @@ JS inside it
 + In xml: <header className="App-header"> | <button onClick={()=>{ this.setState({string: 'honhattan'})}}>Change</button>
 In html: <header class="App-header">    |   <button onclick={()=>{ this.setState({string: 'honhattan'})}}>Change</button>
 
++ import React, {Component} from 'react' ==> class App extends Component {}
+Or import React from 'react' ==> class App extends React.Component {}
