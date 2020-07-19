@@ -209,7 +209,7 @@ test.myFriends(friends);//["",""] ==> error
 Person.prototype.myFriends1 = function(friends) {
     var self = this;
     let arr = friends.map(function(el) {
-        return self.name; // this is an window object, not pointing for object of Person constructor
+        return self.name; 
     });
     console.log(arr);
 }
@@ -230,9 +230,9 @@ test2.myFriends2(friends);
 //Fix 3
 Person.prototype.myFriends3 = function(friends) {
     let arr = friends.map(el => {
-        return this.name; // this is an window object, not pointing for object of Person constructor
-    });
-    console.log(arr);
+        return this.name; // Now it was shared with the "this" of class's object
+        console.log(arr);
+    }
 }
 var test3 = new Person('tan');
 test3.myFriends3(friends);
@@ -295,10 +295,20 @@ handleChange = even => {
 //The different thing is now we don't call directly the handleChange function "this.handleChange()",
 //instead of that, we just use handleChange to refer a method. And now, this.handleChange will look
 //back to the method and see the method handleChange are assigning to the other function. So, right now
-// we are having two different functions. That's why, the "this" object of the right function will be 
+// we are having two different functions. It just like now the right function cannot be treated as method
+// of the class anymore. That's why, the "this" object of the right function will be 
 // not sure a "this" object of the class. However, in this case, the right function is a arrow function,
 //==> its "this" object will be shared with the "this" object of the left that means it is also the
-//"this" object of class. We also see the second way to make the "this" object of the right function
+//"this" object of class. In the other case, instead of using arrow in ES7, we use the declaration in
+//ES6 like:
+handleChange(even) {
+  return this.setState({searchField: even.target.value});
+}
+//We must have the error, because now, "this" object in this.setState is in the function scope, it's not
+// a object of class's method anymore.
+
+
+//We also see the second way to make the "this" object of the right function
 // be equal the "this" object of class by using bind method in number 2.
 handleChange={this.handleChange}
 /////////////////////////////////////////////////////////////////
@@ -349,7 +359,7 @@ handleChange={this.handleChange}
 
   handleChange={function(e){
     return this.handleChange(e); // this is a object of function, and this function is not a method of class ==> it is window object
-  }.bind(this)}
+  }.bind(this)}// ==> using bind method
 /////////////////////////////////////////////////////////////////
 
 6/////////////////////////////////////////////////////////////////
@@ -359,4 +369,56 @@ handleChange={this.handleChange}
 
   handleChange={ e => this.handleChange(e) }
   /////////////////////////////////////////////////////////////////
+  //We can explain the number 5 and 6 base on the previous cases. Now, we can have some error cases:
 
+  7/////////////////////////////////////////////////////////////////
+  handleChange(even) {
+    return this.setState({searchField: even.target.value});
+  }
+
+  handleChange={this.handleChange}
+  // ==> the code above will have a error, and the explanation is in the number 1
+
+  //==> How to fix for this case
+
+  self = this;
+  handleChange(even) {
+    return self.setState({searchField: even.target.value});
+  }// ==> still have an error, because self in class is not an global, so in a function method of class,
+  // we have to use this keyword to access the self, just like as below
+  
+  self = this;
+  handleChange(even) {
+    return this.self.setState({searchField: even.target.value});
+  } //==> still have an error as well, because "this" now is still an object of function scope,
+    //not of the class's object
+
+  handleChange={this.handleChange}
+  /////////////////////////////////////////////////////////////////
+  //The way we want to do is pass a "this" of class's object into handleChange method function
+  // ==> the only way we can do is using bind method to pass the "this" before we call it. However,
+  // we cannot do, like: 
+  handleChange(even) {
+    return this.self.setState({searchField: even.target.value});
+  }.bind(this);
+
+  // Because it is not a function expression, it now is a function declaration. We only can do:
+  function(){}.bind(this); // it likes a function expression
+
+  // So, we can fix by using the code below:
+  /////////////////////////////////////////////////////////////////
+  this.handleChange = this.handleChange.bind(this);//return a function
+
+  handleChange(even) {
+    return this.setState({searchField: even.target.value});
+  }
+ 
+  handleChange={this.handleChange}
+
+  //Explain:
+  // Line 415 will refer to the method this.handleChange of class. However, before going to exactly
+  // the function definition, it will be called with bind method in line 412, that means including
+  // its original paremeters, it will be added a new paremeter, "this" class's object. And then, the
+  // method function will implement the code in line 411 with "this"  now is a class's object, not
+  // just a object of function scope anymore.
+  /////////////////////////////////////////////////////////////////
