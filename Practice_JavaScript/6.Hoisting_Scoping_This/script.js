@@ -292,13 +292,14 @@ handleChange = even => {
       return this.setState({searchField: even.target.value});
     }
 
-//The different thing is now we don't call directly the handleChange function "this.handleChange()",
-//instead of that, we just use handleChange to refer a method. And now, this.handleChange will look
-//back to the method and see the method handleChange are assigning to the other function. So, right now
-// we are having two different functions. It just like now the right function cannot be treated as method
-// of the class anymore. That's why, the "this" object of the right function will be 
+//The different thing is line: handleChange={this.handleChange} now we don't call directly the handleChange
+//function "this.handleChange()". Instead of that, we just use handleChange to refer a method. And now,
+//this.handleChange will look back to the method and see the method handleChange in line 291 are assigning to
+//the other function. So, right now, we are having two different functions. The left is a method of class <=>
+//this.handleChange, and thhe righ is arrow function(in line 291). It just like now the right function cannot be
+//treated as method of the class anymore. That's why, the "this" object of the right function will be 
 // not sure a "this" object of the class. However, in this case, the right function is a arrow function,
-//==> its "this" object will be shared with the "this" object of the left that means it is also the
+//==> its "this" object will be shared with the "this" object of the left function that means it is also the
 //"this" object of class. In the other case, instead of using arrow in ES7, we use the declaration in
 //ES6 like:
 handleChange(even) {
@@ -416,9 +417,10 @@ handleChange={this.handleChange}
   handleChange={this.handleChange}
 
   //Explain:
-  // Line 415 will refer to the method this.handleChange of class. However, before going to exactly
-  // the function definition, it will be called with bind method in line 412, that means including
-  // its original paremeters, it will be added a new paremeter, "this" class's object. And then, the
-  // method function will implement the code in line 411 with "this"  now is a class's object, not
+  // Line handleChange={this.handleChange} will refer to the method this.handleChange of class. 
+  // However, before going to exactly the function definition, it will be called with bind method in line
+  // this.handleChange = this.handleChange.bind(this) ==> that means including its original paremeters,
+  // it will be added a new paremeter, "this" class's object. And then, the method function will implement
+  // the code in line handleChange(even) {} with "this"  now is a class's object, not
   // just a object of function scope anymore.
   /////////////////////////////////////////////////////////////////
