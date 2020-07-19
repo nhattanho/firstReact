@@ -2,6 +2,8 @@ import React, {Component} from 'react'; //it is library supporting to write the 
 import logo from './logo.svg'; // logo just likes a variable
 import './App.css';
 import { CardList } from './components/card-list/cardlist'
+import { SearchBox } from './search/searchbox'
+
 //JSX
 class App extends Component { // class App extends React.Component {}
 /*
@@ -23,7 +25,8 @@ class App extends Component { // class App extends React.Component {}
   };
 */
   state = {
-    monsters: []
+    monsters: [],
+    searchField: ''
   }
 
   componentDidMount() {
@@ -33,7 +36,7 @@ class App extends Component { // class App extends React.Component {}
     })
     .then(users => {
       console.log(users); //user is an array of objects
-      this.setState({monsters: users});
+      this.setState({monsters: users});//=> monsters is an array objects
     })
     .catch(err => {
       console.log(err);
@@ -41,15 +44,22 @@ class App extends Component { // class App extends React.Component {}
   }
 
   render() {
+    const {monsters, searchField } = this.state;
+    const filterMonsters = monsters.filter( monster => {
+      return monster.name.toLowerCase().includes(searchField.toLowerCase()); // return an array contains all elements satisfying the include method 
+    });//in the first time, the searchField = '', so the filterMonsters = this.state.monsters;
     return (
       <div className="App"> 
-        <CardList name='NhatHo'>
-        {
-          this.state.monsters.map( monster => 
-            (<h1 key={monster.id}> {monster.name} </h1>)
-          )
-        }
-        </CardList>
+
+      <SearchBox ></SearchBox>
+
+      <input type='search' placeholder='search monster' onChange=
+        {(e)=>{ //whenever having a event onChange ==> state will be set again ==> trigger re-render ==> update filterMonsters again
+          this.setState({searchField: e.target.value});
+          //console.log(this.state.searchField);
+        }}>
+      </input>
+        <CardList monsters={filterMonsters}></CardList>
         {/*
           this.state.monsters.map( monster => 
             (<h1 key={monster.id}> {monster.name} </h1>)

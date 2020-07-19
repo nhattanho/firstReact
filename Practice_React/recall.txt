@@ -34,3 +34,28 @@ In html: <header class="App-header">    |   <button onclick={()=>{ this.setState
 
 + import React, {Component} from 'react' ==> class App extends Component {}
 Or import React from 'react' ==> class App extends React.Component {}
+
++ In XML: combine Js and html==> if we want to add js code, it has to be in {}, and for html, html's code
+has to be in (). If we use {}, and inside is not a js => syntax error. Example:
+export const CardList = (props) => {
+    (
+        <div className='cardlist'> 
+            {props.monsters.map( ele => 
+                (<h1>{ele.name}</h1>)
+            )} 
+        </div>
+    )
+};
+==> wrong, because inside{} is a () which used for html, so the right code has to be:
+export const CardList = (props) => {
+    return ( //==>return is a command in js
+        <div className='cardlist'> 
+            {props.monsters.map( ele => 
+                (<h1>{ele.name}</h1>)
+            )} 
+        </div>
+    );
+};
+
++ Each props should have an unique key, example:
+<Card key={monster.id} monster={monster.name}> </Card>
