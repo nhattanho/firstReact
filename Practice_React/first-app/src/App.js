@@ -104,6 +104,7 @@ class App extends Component { // class App extends React.Component {}
   // }
 
   //ES6
+
   handleChange = this.handleChange.bind(this); //only add this line when we use: handleChange={this.handleChange}
   handleChange(even) {
     return this.setState({searchField: even.target.value});
@@ -134,7 +135,7 @@ class App extends Component { // class App extends React.Component {}
     // console.log('***********************end***************************');
     return (
       <div className="App"> 
-
+        <h1> My First App </h1>
         <SearchBox 
           placeholder='search monster' 
           
