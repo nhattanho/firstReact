@@ -96,10 +96,9 @@ for example:*/
 /*+ Understanding about method filter of Array*/
     const newArr = [34, 67, 89, 40];
     const get = newArr.filter(el => el < 67);
-    console.log(get); // 34, 40
+    console.log(get); // 34, 40 ==> return an array which contains all elements satisfying the comparison
 
 /*+ Note: we need to be careful when using the this keyword for an object that have many functions in its.
-Remarkable: This problem will never happen in a function, just focus on object for this case.
 Example:*/
 var box5 = {
     color: 'green',
