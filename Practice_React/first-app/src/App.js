@@ -2,7 +2,7 @@ import React, {Component} from 'react'; //it is library supporting to write the 
 import logo from './logo.svg'; // logo just likes a variable
 import './App.css';
 import { CardList } from './components/card-list/cardlist'
-import { SearchBox } from './search/searchbox'
+import { SearchBox } from './components/search/searchbox'
 
 //JSX
 class App extends Component { // class App extends React.Component {}
@@ -51,14 +51,11 @@ class App extends Component { // class App extends React.Component {}
     return (
       <div className="App"> 
 
-      <SearchBox ></SearchBox>
+        <SearchBox 
+          placeholder='search monster' 
+          handleChange={ e => this.setState({searchField: e.target.value}) }
+        />
 
-      <input type='search' placeholder='search monster' onChange=
-        {(e)=>{ //whenever having a event onChange ==> state will be set again ==> trigger re-render ==> update filterMonsters again
-          this.setState({searchField: e.target.value});
-          //console.log(this.state.searchField);
-        }}>
-      </input>
         <CardList monsters={filterMonsters}></CardList>
         {/*
           this.state.monsters.map( monster => 

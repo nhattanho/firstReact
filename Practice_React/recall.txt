@@ -57,5 +57,34 @@ export const CardList = (props) => {
     );
 };
 
+==> Or we can use the new feature of ES6 like:
+export const CardList = (props) =>
+    ( //==>return is a command in js
+        <div className='cardlist'> 
+            {props.monsters.map( ele => 
+                (<h1>{ele.name}</h1>)
+            )} 
+        </div>
+    );
+}; // it automatically return a value which in this case is a (html)
+
 + Each props should have an unique key, example:
 <Card key={monster.id} monster={monster.name}> </Card>
+
++ We have the example of designer's graph in React:
+
+                     App.js - Parent Node
+                        /       \
+                       /         \
+                    CardList    SearchBox
+                      /            \      \
+                     /              \      \
+                  Child3          Child4   Child5
+
+As we can see, the Parent Node is a key of the tree, so the state should only stay on the App.js;
+it shouldn't be passed as an argument into other Child modules or functions. If the state located
+on the Parent Node, every time it was changed, the system from the parent node will update
+information for all child Nodes. However, for example, the state located on the Search Box,
+so the changing of it just only affects its ChildNode like Child4 and Child5, and of course,
+this change was not updated for all the systems. This has to be prevented in the React system.
+Therefore, the state has to be located in the root of the tree all the time.
