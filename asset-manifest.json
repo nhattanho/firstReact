@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/nhattanho.github.io/firstReact/tree/master/Practice_React/first-app/static/css/main.98959261.chunk.css",
+    "main.js": "/nhattanho.github.io/firstReact/tree/master/Practice_React/first-app/static/js/main.2514feb0.chunk.js",
+    "main.js.map": "/nhattanho.github.io/firstReact/tree/master/Practice_React/first-app/static/js/main.2514feb0.chunk.js.map",
+    "runtime-main.js": "/nhattanho.github.io/firstReact/tree/master/Practice_React/first-app/static/js/runtime-main.7fd869e4.js",
+    "runtime-main.js.map": "/nhattanho.github.io/firstReact/tree/master/Practice_React/first-app/static/js/runtime-main.7fd869e4.js.map",
+    "static/js/2.387cd52b.chunk.js": "/nhattanho.github.io/firstReact/tree/master/Practice_React/first-app/static/js/2.387cd52b.chunk.js",
+    "static/js/2.387cd52b.chunk.js.map": "/nhattanho.github.io/firstReact/tree/master/Practice_React/first-app/static/js/2.387cd52b.chunk.js.map",
+    "index.html": "/nhattanho.github.io/firstReact/tree/master/Practice_React/first-app/index.html",
+    "precache-manifest.4e5c653c072d3fb8eff4fc7382a80d42.js": "/nhattanho.github.io/firstReact/tree/master/Practice_React/first-app/precache-manifest.4e5c653c072d3fb8eff4fc7382a80d42.js",
+    "service-worker.js": "/nhattanho.github.io/firstReact/tree/master/Practice_React/first-app/service-worker.js",
+    "static/css/main.98959261.chunk.css.map": "/nhattanho.github.io/firstReact/tree/master/Practice_React/first-app/static/css/main.98959261.chunk.css.map",
+    "static/js/2.387cd52b.chunk.js.LICENSE.txt": "/nhattanho.github.io/firstReact/tree/master/Practice_React/first-app/static/js/2.387cd52b.chunk.js.LICENSE.txt",
+    "static/media/logo.svg": "/nhattanho.github.io/firstReact/tree/master/Practice_React/first-app/static/media/logo.5d5d9eef.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.7fd869e4.js",
+    "static/js/2.387cd52b.chunk.js",
+    "static/css/main.98959261.chunk.css",
+    "static/js/main.2514feb0.chunk.js"
+  ]
+}
