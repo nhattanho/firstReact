@@ -88,3 +88,63 @@ information for all child Nodes. However, for example, the state located on the 
 so the changing of it just only affects its ChildNode like Child4 and Child5, and of course,
 this change was not updated for all the systems. This has to be prevented in the React system.
 Therefore, the state has to be located in the root of the tree all the time.
+
++ In React, in render part, we just refer the method whenever the event apprears instead of calling it
+directly. (This also was mentioned in section 6 of Practice_Javascript) Example:
+1/////////////////////////////////////////////////////////////////
+ES7 and use arrow function
+handleChange = even => {
+      return this.setState({searchField: even.target.value});
+    }
+
+handleChange={this.handleChange} // this is refer the event
+/////////////////////////////////////////////////////////////////
+
+2/////////////////////////////////////////////////////////////////
+  //ES7 but don't use arrow function
+  handleChange = function(even) {
+    return this.setState({searchField: even.target.value});
+  }.bind(this);
+
+  handleChange={this.handleChange}
+/////////////////////////////////////////////////////////////////
+
+We shouldn't do:
+3/////////////////////////////////////////////////////////////////
+//ES7 but don't use arrow function
+  handleChange = function(even) {
+    return this.setState({searchField: even.target.value});
+  }
+
+  handleChange={ e => this.handleChange(e) } // we are calling directly a method function
+/////////////////////////////////////////////////////////////////
+
+4/////////////////////////////////////////////////////////////////
+  //ES7 but don't use arrow function
+  handleChange = function(even) {
+    return this.setState({searchField: even.target.value});
+  }
+
+  handleChange={function(e){
+    return this.handleChange(e); // this is a object of function, and this function is not a method of class ==> it is window object
+  }.bind(this)}// bind to get this of an object of class 
+/////////////////////////////////////////////////////////////////
+
+5/////////////////////////////////////////////////////////////////
+  handleChange = even => {
+      return this.setState({searchField: even.target.value});
+  }
+
+  handleChange={function(e){
+    return this.handleChange(e); // this is a object of function, and this function is not a method of class ==> it is window object
+  }.bind(this)}
+/////////////////////////////////////////////////////////////////
+
+6/////////////////////////////////////////////////////////////////
+  handleChange = even => {
+      return this.setState({searchField: even.target.value});
+  }
+
+  handleChange={ e => this.handleChange(e) }
+  /////////////////////////////////////////////////////////////////
+*/
