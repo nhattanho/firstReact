@@ -7,7 +7,7 @@ ReactDOM.render(app, document.querySelector('#app')); // checking in the index.h
 
 + import React from 'react'; //it is library supporting to write the xml in javascript <=> JSX
 
-+ Babel is a JS pre-processor to compile the code of React to code which can run successfully on all Browsers
++ Babel is a JS pre-processor to compile the code of React/JSX to real JS code which can run successfully on all Browsers
 
 +ES6 Modules helps us separate the project to several files/modules ==> easier to manage and mantain the code
 ==> However, the problem is browsers do not really support this features, so we have to bundle these modules
@@ -148,3 +148,31 @@ We shouldn't do:
   handleChange={ e => this.handleChange(e) }
   /////////////////////////////////////////////////////////////////
 */
+
++ Somthing about Lifecycle Methods
+Assume we have the code:
+
+class Lifecycle extends Component {
+  constructor() {
+    super();
+    console.log(constructor);
+  }
+
+  componentDidMount() {
+    console.log('DidMount');
+  }
+
+  componentDidUpdate() {
+    console.log('DidUpdate');
+  }
+
+  componentWillUnmount() {
+    console.log('WillUnmount');
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    console.log('shouldComponentUpdate',nextProps);
+    return true;
+  }
+
+}

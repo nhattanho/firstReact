@@ -107,7 +107,7 @@ class App extends Component { // class App extends React.Component {}
 
   handleChange = this.handleChange.bind(this); //only add this line when we use: handleChange={this.handleChange}
   handleChange(even) {
-    return this.setState({searchField: even.target.value});
+    return this.setState({searchField: even.target.value});//this command works in background bc it is a asynchronous
   }
 
   // life cycle component
