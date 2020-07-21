@@ -149,30 +149,11 @@ We shouldn't do:
   /////////////////////////////////////////////////////////////////
 */
 
-+ Somthing about Lifecycle Methods
-Assume we have the code:
++ Somthing about Lifecycle Methods (look back to 4.life-cycle)
 
-class Lifecycle extends Component {
-  constructor() {
-    super();
-    console.log(constructor);
-  }
-
-  componentDidMount() {
-    console.log('DidMount');
-  }
-
-  componentDidUpdate() {
-    console.log('DidUpdate');
-  }
-
-  componentWillUnmount() {
-    console.log('WillUnmount');
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    console.log('shouldComponentUpdate',nextProps);
-    return true;
-  }
-
-}
++ The difference between using the function and the class in React
+- When we want to create a component in React that we don't need to manage or access to its lifecyle Methods, 
+we should use the function components. It's easier to use, write, and read. However, if we actually want to access
+to behind the scene to get more powerfull to control the flow of app's artchitecure, we can use class component
+instead of function. We can reference the section 2.first-app for function handling or section 4.life-cycle for
+using class components.

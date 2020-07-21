@@ -6,7 +6,7 @@ import './App.css';
 class App extends Component {
   //Using ES7 ==> It is shorter than using ES6. And props passed from file index.js will automatically be understood in this file
   // state = {
-  //   number: 50 + this.props.incre
+  //   number: 50
   // };
 
   //=> Come back to use ES6 with passing the props from the index.js
@@ -28,15 +28,24 @@ class App extends Component {
   //   };
   // }
 
+  /* First way:*/
   // constructor(props){ 
-  //   super(props);
+  //   super(props); // when we call the props in super constructor, the command this.props = props will be conducted in the super function automatically
   //   this.state = {
   //     number: 50 + this.props.incre
   //   };
-  //   //this.props = props;
   // }
 
-  // However, with ES7, we don't need to pass the props, it will handle all of things for us:
+  /* Second way:*/
+  // constructor(props){ 
+  //   super(); // if we call super function without the arguments, so we just get all the component functions from the Components class
+  //   this.props = props;// not for assigning props for this.props, so we have do it manually as this line
+  //   this.state = {
+  //     number: 50 + this.props.incre
+  //   };
+  // }
+
+  //However, with ES7, we don't need to pass the props, it will handle all of things for us:
   state = {
     number: 50 + this.props.incre // props is equal level with state, and we are in the method of state object, so we need
     //to use "this" to point the props ==> make sense!
