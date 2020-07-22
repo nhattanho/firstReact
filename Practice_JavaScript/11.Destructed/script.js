@@ -38,12 +38,21 @@ console.log(`The result: grade: ${grade}, and newGrade: ${newGrade}`);
 console.log('test for object');
 let obj = {
     name1: 'tan',
-    age1: 29
+    age1: 29,
+    job1: 'tutor'
 };
 
 // Note: the {name1 and age1} has to be same as the name1 and age1 of obj
 let {name1, age1} = obj;// name = obj.name and age = obj.age
 console.log(name1 + ' ' + age1);
+
+//we can let as below:
+let {job1, age1, name1 } = obj; // doesn't matter the order of object's method(job1, name1, age1)
+// The only thing we need to focus is the name of left object has to be same name as the right object
+// and the JS will assign approriate value 
+console.log(job1); // tutor
+console.log(age1); // 29
+console.log(name1); // tan
 
 // or we can change the name of variable for an object
 let {name1: a, age1: b} = obj;// ==> a = obj.name and b = obj.age
