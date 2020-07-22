@@ -6,11 +6,10 @@ const person = {
 export default person;
 
 /* work.js */
-const clean = {
+export const clean = {
     time: 9
 }
 
-export const clean;
 
 /* application.js */ // we import the modules from person.js and work.js files
 import person from './person.js'

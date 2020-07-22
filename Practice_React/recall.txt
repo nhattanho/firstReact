@@ -157,3 +157,46 @@ we should use the function components. It's easier to use, write, and read. Howe
 to behind the scene to get more powerfull to control the flow of app's artchitecure, we can use class component
 instead of function. We can reference the section 2.first-app for function handling or section 4.life-cycle for
 using class components.
+
++ THE CODE BEFORE SEPARATE THE HOMEPAGE.JSX
+export const HomePage = () => (
+    <div className='homepage'>
+    <h1>Welcome to my HomePage</h1>
+        <div className='directory-menu'>
+            <div className='menu-item'> 
+                <div className='content'>
+                    <h1 className='title'>HATS</h1>
+                    <span className='subtitle'>SHOP NOW</span>
+                </div>
+            </div>
+
+            <div className='menu-item'> 
+                <div className='content'>
+                    <h1 className='title'>JACKETS</h1>
+                    <span className='subtitle'>SHOP NOW</span>
+                </div>
+            </div>
+
+            <div className='menu-item'> 
+                <div className='content'>
+                    <h1 className='title'>SNEAKERS</h1>
+                    <span className='subtitle'>SHOP NOW</span>
+                </div>
+            </div>
+
+            <div className='menu-item'> 
+                <div className='content'>
+                    <h1 className='title'>WOMENS</h1>
+                    <span className='subtitle'>SHOP NOW</span>
+                </div>
+            </div>
+
+            <div className='menu-item'> 
+                <div className='content'>
+                    <h1 className='title'>MENS</h1>
+                    <span className='subtitle'>SHOP NOW</span>
+                </div>
+            </div>
+        </div>
+    </div>
+);
