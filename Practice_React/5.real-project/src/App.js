@@ -2,36 +2,39 @@ import React, { Component } from 'react';
 import './App.css';
 import { HomePage } from './pages/homepage/homepage.component';
 import {Route, Switch, Link} from 'react-router-dom';
+import ShopPage from './pages/shop/shop.component';
 
-const HatsPage = (props) => {
-  console.log(props); // props is an object
-  return (
-  <div>
-  {/*<Link to='/hats/hat'>Go to hat page</Link>*/}
-  <button onClick={ () => { props.history.push('/hats/hat')} }>Go to the hat page</button>
-  <h1>HATS PAGE</h1>
-  </div>
-)};
+// const HatsPage = (props) => {
+//   console.log(props); // props is an object
+//   console.log(props.match.url);
+//   return (
+//   <div>
+//   {/*<Link to='/hats/hat'>Go to hat page</Link>*/}
+//   {/*<button onClick={ () => { props.history.push('/hats/hat')} }>Go to the hat page</button>*/}
+//   <button onClick={ () => { props.history.push(`${props.match.url}/hat`)} }>Go to the hat page</button>
+//   <h1>HATS PAGE</h1>
+//   </div>
+// )};
 
-/* for testing */
-const HatPage = (props) => {
-  console.log(props);
-  return (
-    <div>
-    {/* This is a way to pass an dynamic path */}
-      <Link to={ `${props.match.url}/10` }>Go to 10</Link>
-      <Link to={ `${props.match.url}/11` }>Go to 11</Link>
-      <Link to={ `${props.match.url}/12` }>Go to 12</Link>
-      <h1>HAT PAGE</h1>
-    </div>
-  );
-}
+// /* for testing */
+// const HatPage = (props) => {
+//   console.log(props);
+//   return (
+//     <div>
+//     {/* This is a way to pass an dynamic path */}
+//       <Link to={ `${props.match.url}/10` }>Go to 10</Link>
+//       <Link to={ `${props.match.url}/11` }>Go to 11</Link>
+//       <Link to={ `${props.match.url}/12` }>Go to 12</Link>
+//       <h1>HAT PAGE</h1>
+//     </div>
+//   );
+// }
 
-const Hat1Page = (props) => (
-  <div>
-    <h1>HAT1 PAGE gets id is: {props.match.params.hatid}</h1>
-  </div>
-);
+// const Hat1Page = (props) => (
+//   <div>
+//     <h1>HAT1 PAGE gets id is: {props.match.params.hatid}</h1>
+//   </div>
+// );
 
 class App extends Component {
   render() {
@@ -60,11 +63,17 @@ class App extends Component {
           Conclusion, we need to use exact to make sure getting the true path that we want to navigate.
           */}
         <Switch>
-          <Route exact path='/' component={HomePage}></Route>
-          <Route exact path='/hats' component={HatsPage}></Route>
-          <Route exact path='/hats/hat' component={HatPage}></Route>
-          <Route path='/hats/hat/:hatid' component={Hat1Page}></Route> {/* :hatid helps us to get id or parameter from the path */}
-          {/* Example: http://localhost:3000/hats/hat/12 ==> HAT1 PAGE gets id is: 12 */}
+          {/* Route default has 3 parameters: exact, path <=> url, and component */}
+          <Route exact path='/' component={HomePage}></Route> 
+          <Route exact path='/shop' component={ShopPage}></Route>
+          {/* just for the testing
+            <Route exact path='/hats' component={HatsPage}></Route>
+            <Route exact path='/hats/hat' component={HatPage}></Route>
+            <Route path='/hats/hat/:hatid' component={Hat1Page}></Route>
+            { :hatid helps us to get id or parameter from the path }
+            { Example: http://localhost:3000/hats/hat/12 ==> HAT1 PAGE gets id is: 12 }
+          */}
+          
         </Switch>
 
       </div>

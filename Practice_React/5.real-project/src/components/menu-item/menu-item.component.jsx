@@ -1,9 +1,14 @@
 import React from 'react';
 import './menu-item.styles.scss';
+import {withRouter} from 'react-router-dom';
 
-const MenuItem = ({title, imageUrl, size}) => ( // object props now includes {title}
+//props now is {title, imageUrl, size, history}, history is a default property of this component
+const MenuItem = ({title, imageUrl, size, linkUrl, history, match}) => {
+    return ( // object props now includes {title}
     <div  
-         className={ `menu-item ${size}` } // <=> {size + 'menu-item'}
+        className={ `menu-item ${size}` } // <=> {size + 'menu-item'}
+        onClick={ () => history.push(`${match.url}${linkUrl}`)} ////url is a original path was passed into previous components
+        // <=> onCick={history.push('./hat')} 
     > 
         <div 
             style={ // use for js
@@ -19,7 +24,8 @@ const MenuItem = ({title, imageUrl, size}) => ( // object props now includes {ti
             <span className='subtitle'>SHOP NOW</span>
         </div>
     </div>
-);
+    );
+}
 
-export default MenuItem;
+export default withRouter(MenuItem);//return a super power component with the same name MenuItem and its neccessary properties
 
