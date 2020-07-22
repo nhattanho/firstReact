@@ -22,11 +22,11 @@
       }
     }  
 
-    &.large {
+    &.large { // child class
      height: 380px; 
     }
   
-    &:first-child {
+    &:first-child { // selector
       margin-right: 7.5px;
     }
   
