@@ -3,6 +3,7 @@ import './App.css';
 import { HomePage } from './pages/homepage/homepage.component';
 import {Route, Switch, Link} from 'react-router-dom';
 import ShopPage from './pages/shop/shop.component';
+import Header from './components/header/header.component';
 
 // const HatsPage = (props) => {
 //   console.log(props); // props is an object
@@ -62,6 +63,8 @@ class App extends Component {
           slash. Example /level1/level2/level3/.... ==> just go into the homepage and stop immediately
           Conclusion, we need to use exact to make sure getting the true path that we want to navigate.
           */}
+
+        <Header></Header>
         <Switch>
           {/* Route default has 3 parameters: exact, path <=> url, and component */}
           <Route exact path='/' component={HomePage}></Route> 

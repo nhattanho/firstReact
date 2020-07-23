@@ -1,0 +1,25 @@
+.header {
+    height: 70px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;// all children of class header will be separated
+    margin-bottom: 25px; // distance from the bottom the element
+  
+    .logo-container {
+      height: 100%;
+      width: 70px;
+      padding: 25px;
+    }
+  
+    .options {
+      width: 50%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end; // most all the right side 
+  
+      .option {
+        padding: 10px 25px;
+      }
+    }
+  }

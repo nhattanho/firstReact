@@ -257,3 +257,15 @@ Example we have MenuItem component.
         </div>
     </div>
 );
+
++ The graph of project
+
+                                        App.js
+                                        /  |  \
+                                      /    |    \
+                                    /      |      \
+                                  /        |        \ 
+                            HomePage    ShopPage   .....
+                               |           | 
+                           Directory   Collection
+                              
