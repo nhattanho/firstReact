@@ -1,0 +1,47 @@
+.collection-item {
+    width: 22%;
+    display: flex;//
+    flex-direction: column;//
+    height: 350px;
+    align-items: center;
+    overflow: hidden; /*preventing the overflow of menu item*/
+
+    // &:hover {
+    //     cursor: pointer;
+    
+    //     & .image {
+    //       transform: scale(1.1);
+    //       transition: transform 6s cubic-bezier(0.25, 0.45, 0.45, 0.95);
+    //     }
+    
+    //     & .collection-footer {
+    //       opacity: 1.1; // make the class's content conden
+    //     }
+    // }  
+
+    .image {
+      width: 100%;
+      height: 92%;
+      background-size: cover;
+      background-position: center;
+      margin-bottom: 5px;
+      //overflow: hidden;
+    }
+  
+    .collection-footer {
+      width: 100%;
+      height: 8%;
+      display: flex; //
+      justify-content: space-between;//
+      font-size: 18px;
+  
+      .name {
+        width: 90%;
+        margin-bottom: 15px;
+      }
+  
+      .price {
+        width: 10%;
+      }
+    }
+  }
