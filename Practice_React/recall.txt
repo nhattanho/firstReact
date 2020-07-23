@@ -258,14 +258,6 @@ Example we have MenuItem component.
     </div>
 );
 
-+ The graph of project
-
-                                        App.js
-                                        /  |  \
-                                      /    |    \
-                                    /      |      \
-                                  /        |        \ 
-                            HomePage    ShopPage   .....
-                               |           | 
-                           Directory   Collection
++ Import the svg file into the component
+import { ReactComponent as Logo} from <path of the svg logo>
                               

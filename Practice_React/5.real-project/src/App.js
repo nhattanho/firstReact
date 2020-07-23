@@ -4,6 +4,7 @@ import { HomePage } from './pages/homepage/homepage.component';
 import {Route, Switch, Link} from 'react-router-dom';
 import ShopPage from './pages/shop/shop.component';
 import Header from './components/header/header.component';
+import SigninSignupPage from './pages/signin-signup/signin-signup.component';
 
 // const HatsPage = (props) => {
 //   console.log(props); // props is an object
@@ -69,6 +70,7 @@ class App extends Component {
           {/* Route default has 3 parameters: exact, path <=> url, and component */}
           <Route exact path='/' component={HomePage}></Route> 
           <Route exact path='/shop' component={ShopPage}></Route>
+          <Route exact path='/signin' component={SigninSignupPage}></Route>
           {/* just for the testing
             <Route exact path='/hats' component={HatsPage}></Route>
             <Route exact path='/hats/hat' component={HatPage}></Route>
