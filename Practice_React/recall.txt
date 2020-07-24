@@ -260,4 +260,27 @@ Example we have MenuItem component.
 
 + Import the svg file into the component
 import { ReactComponent as Logo} from <path of the svg logo>
+
++ The way to handle in getting signin form:
+
+state = {
+    email: '',
+    password: ''
+};
+
+handleChange = event => {
+    const { value, name } = event.target;
+
+    this.setState({ [name]: value });
+};
+
+As we can see because the event.target will return 2 cases of its value. Example, they are:
+name=email, value= honhattan2411@gmail.component
+name=password, value=1234
+==> how to setState in this case. For the purpose, we need to set as email: event.target.value or
+password: event.tartget.value, however, we need to get exactly the value for email or password, because
+email or password has it own value separately. Luckily, we can get the value base on its name. For instance,
+[name] : value <=> name now is the key, and name and value is a pair together. Therefore, we can use:
+this.setState({ [name]: value }); ==> if name is the email, so [name] <=> [email] ==> get the value of email
+and as the same way as password.
                               
