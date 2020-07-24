@@ -15,9 +15,31 @@ class SignIn extends Component {
     };
     
     handleChange = event => {
-        const { value, name } = event.target;
-    
-        this.setState({ [name]: value });
+        const { value, name } = event.target; // event.target will return an object
+        /* Example: {
+                        value: 'honhattan2411@gmail.com',
+                        name: 'email'               
+                    } 
+            or
+                    {
+                        value: '12345',
+                        name: 'password'
+                    }
+
+            ==> if name = 'email', then value = 'honhattan2411@gmail.com', and name = 'password'
+            then value = '12345'
+        */
+        this.setState({ [name]: value }); // look back to the newscript.js in section 8.Advanced Object and Function
+        /*Note
+        this.setState({[name]: value}) <=> this.setState( () => {
+            state[name] = value; 
+            // because name is 'email' or 'password' ==> state[name] <=> state['email'] or state['password]
+            //==> state['email'] = 'honhattan2411@gmail.com
+            //==> state['password'] = '12345'
+            //==> this is the way to set the value for properties of object when we don't know exactly
+            //what properties we will set up, or the properties, which will be setup, was passed by users.
+        })        
+        */
     };
     
     render() {

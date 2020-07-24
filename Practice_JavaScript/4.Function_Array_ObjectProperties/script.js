@@ -1,3 +1,5 @@
+/***********************************Talk about the functions************************************************/
+
 // Function with return a value
 function addition(number1, number2) {
     return number1 + number2;
@@ -28,6 +30,7 @@ console.log('the result is ' + result(10,12));
 //console.log('the result is ' + result); ==> wrong, because in
 //this code, it will show all content of the function in console
 
+/***********************************Talk about the array************************************************/
 //==> going to array
 var arr = [1, 2, 3]; // the first way
 var arr1 = new Array(1, 2, 3);// the second way
@@ -51,6 +54,9 @@ var pos = mulType.indexOf('honhattan') === -1 ? 'This element is not in the arra
 : 'the element is in the array';
 console.log(pos);
 
+// Need to learn about forEach and Map method of Array ==> talk into section 8.Advanced_Object and Function
+
+/***********************************Talk about the Object************************************************/
 //==> going objects and properties
 var nhattan = { // the first way to create the object
     firstName: 'Nhat',

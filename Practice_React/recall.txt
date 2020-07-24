@@ -1,10 +1,9 @@
 + React likes an external library of JS which using new featurs of JS called ES6
 
-+ React-dom is a rendering to convert components in React to a real DOM or insert the code into html file
++ React-dom is a rendering to convert components in virtual dom React to a real DOM or insert the code into html file
 import ReactDOM from 'react-dom';
 ReactDOM.render(app, document.querySelector('#app')); // checking in the index.htm where the element
-//having the id is app and insert this part by function app which has been rendered already.
-
+//having the id is app and insert this part by function app which has been rendered already ==> rendering to real DOM
 + import React from 'react'; //it is library supporting to write the xml in javascript <=> JSX
 
 + Babel is a JS pre-processor to compile the code of React/JSX to real JS code which can run successfully on all Browsers

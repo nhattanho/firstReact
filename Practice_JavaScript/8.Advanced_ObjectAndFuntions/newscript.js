@@ -1,4 +1,4 @@
-// Uderstanding arrow function in ES6
+/*********************Uderstanding more about arrow function in ES6***********************/
 const grades = [100, 45, 89];
 
 // Function in ES5
@@ -25,7 +25,58 @@ let grade6_2 = grades.map( (grade, index, arr1) => {
 });
 console.log(grade6_2);
 
-// Continue Arrow Function
+/*********************Uderstanding more about handling Object***********************/
+let testObj = {
+    name: ['nhat', 'tan'],
+    age: [26, 29]
+}
+
+function getObject(Obj) {
+    return Obj;
+}
+let getObj = getObject(testObj);
+//1.1 The normal way to get properties of object
+console.log(getObj.name);
+console.log(getObj.age);
+
+//1.2 The second way to get properties of object
+console.log(getObj['name']);
+console.log(getObj['age']);
+
+//1.3 The third way to get properties of object
+let {age, name} = getObject(testObj); // => the order of properties doesn't matter but the name of properties has to be same name with original properties like: name and age
+console.log(age);  
+console.log(name);
+
+//2.1 The normal way to change the value of properties
+getObj.name[0] = 'nhattan';
+getObj.age[0] = '29';
+console.log(getObj);  
+
+// Now, deeping in using bracket feature to access the properties of object
+let state = {
+    email: '',
+    password: ''
+}
+
+let obj1 = {
+    name: 'email',
+    value: 'honhattan'
+};
+
+let obj2 = {
+    name: 'password',
+    value: '1234'
+}
+
+let objs = [obj1, obj2];
+objs.forEach( (cur) => {
+    let {name, value} = cur; // name is a string, it will be 'email' or 'password'
+    state[name] = value;//so, state[name] will be state['email'] or state['password']
+    // <=> we are accessing into the properties of method through using bracket feature.
+});
+console.log(state); // Object { email: "honhattan", password: "1234" }
+
 /****************************Interaction between arrow function and this keyword in Object**************************/
 // in ES5
 var box5 = {
@@ -108,8 +159,8 @@ console.log(person.myFriend5()); // Nhat
 console.log('Testing for ES5');
 Person.prototype.myFriend51 = function(grades) {
     var arr = grades.map(function(grade, index) {
-        console.log(this.name); // this still points to object of Person constructor
-        //console.log(`${this.name} has grade[${index}] is ${grade}`);
+        console.log(this.name); // ==> <empty string> because this is poiting to the window object in its own function, not for the method function
+        console.log(`${this.name} has grade[${index}] is ${grade}`);
         return 100-grade;
     });
     /* we can do as below:
@@ -124,10 +175,10 @@ var grades5_3 = [100, 90, 87];
 var person1  = new Person('Tan');
 console.log(person1.myFriend51(grades5_3)); // 0 10 13
 
-/*
-Person.prototype.myFriend51 = function(friends) { // it works
+
+Person.prototype.myFriend51 = function(friends) { 
     var arr = friends.map(function(el){
-        console.log(this.name);
+        console.log(this.name);//<empty string>, because this case has the same as problem as above case
         return el;
     });
     console.log(arr);
@@ -135,14 +186,14 @@ Person.prototype.myFriend51 = function(friends) { // it works
 var friends = [78, 80, 70];
 var person1  = new Person('Tan');
 person1.myFriend51(friends);
-*/
+
 
 /********************************************************************/
-/*
+
 console.log('Testing for ES6');
 Person.prototype.myFriend52 = function(friends) {
     var arr = friends.map(el => {
-        console.log(this.name);
+        console.log(this.name); // it works because now the arrow function help inner function share the this key with the outner method function
         return el;
     });
     console.log(arr);
@@ -150,11 +201,11 @@ Person.prototype.myFriend52 = function(friends) {
 var friends = [78, 80, 70];
 var person2  = new Person('Tan');
 person2.myFriend52(friends); // 78 80 70
-*/
+
 
 console.log('Testing for ES6');
-Person.prototype.myFriend52 = friends => { // still working, but not work in Object 
-    var arr = friends.map(el => {
+Person.prototype.myFriend52 = friends => { // <empty string> <=> not working, because now the this key word has been shared with the most ounter Person keyword
+    var arr = friends.map(el => { // so it couldn't pointer to the this object of function method anymore
         console.log(this.name);
         return el;
     });
