@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './form-input.style.scss';
 
-const FormInput = ({ handleChange, label, ...otherProps }) => ( //props has handleChange, label and child prop: otherProps is also an object  
+const FormInput = ({ handleChange, label, ...otherProps }) => ( //props has handleChange, label and child prop: otherProps is also an object , now otherProps includes name, type, value, label
   <div className='group'>
       <input className='form-input' onChange={handleChange} {...otherProps} />
       {/*

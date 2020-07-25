@@ -5,6 +5,7 @@ import {Route, Switch, Link} from 'react-router-dom';
 import ShopPage from './pages/shop/shop.component';
 import Header from './components/header/header.component';
 import SigninSignupPage from './pages/signin-signup/signin-signup.component';
+import { auth } from '../src/firebase/firebase.utils';
 
 // const HatsPage = (props) => {
 //   console.log(props); // props is an object
@@ -39,7 +40,27 @@ import SigninSignupPage from './pages/signin-signup/signin-signup.component';
 // );
 
 class App extends Component {
+
+  state = {
+    currentUser: null
+  }
+
+  unsubscribeFromAuth = null;
+
+  componentWillUnmount(){
+    this.unsubscribeFromAuth();
+  }
+
+  componentDidMount() {
+    this.unsubscribeFromAuth = auth.onAuthStateChanged(user => {// called whenever having something change on signin or out, or updated from user
+      this.setState( {currentUser: user} ); // always open the gate to connect with firebase ==> we need to close to avoid memory leak
+      console.log('didmount');
+      console.log(user);
+    });
+  }
+
   render() {
+    console.log('we rendered');
     return (
       <div>
         {/* exact <=> exact={true} ==> help the router understand that the path has to be exactly
@@ -65,7 +86,7 @@ class App extends Component {
           Conclusion, we need to use exact to make sure getting the true path that we want to navigate.
           */}
 
-        <Header></Header>
+        <Header currentUser={this.state.currentUser}></Header>
         <Switch>
           {/* Route default has 3 parameters: exact, path <=> url, and component */}
           <Route exact path='/' component={HomePage}></Route> 
