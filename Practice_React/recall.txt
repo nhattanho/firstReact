@@ -283,3 +283,53 @@ email or password has it own value separately. Luckily, we can get the value bas
 this.setState({ [name]: value }); ==> if name is the email, so [name] <=> [email] ==> get the value of email
 and as the same way as password.
                               
++ <React.Fragment /> ==> preventing to create a new div element
+Example:
+class Counter extends Component {
+    render() {
+        return (
+            <div> ==> <React.Fragment>
+                <h1>Honhattan</React.Fragment>
+                <p>My name is Nhat Tan</p>
+            </div> ==> <React.Fragment>
+        );
+    }
+}
+
+If in the html, we only have one line, we don't need to wrap it in the <div>, so we can re-write:
+class Counter extends Component {
+    render() {
+        return <p>My name is Nhat Tan</p>
+    }
+}
+
++Understanding about props children:
+Looking an example:
+
+class App extends Component {
+    render() {
+        return (
+            <Person name='nhat' age=26 >
+                <h1>My name is honhattan</>
+                <span>I'm 26 year olds></span>
+            </Person>
+
+        );
+    }
+}
+==> name and age is a props of Person module, while all of elements between <Person> tag are child Props
+
+const Person = (props) => {
+    return (
+        <div>
+            {props.children} //children now include <h1> and <span> from <Person> </Person>
+        </div>
+    );
+}
+
+
++ Understanding more about props and state
+-Props: are the properties passed from the outside into the component
+-State: is a own property of current component. Anything makes state change always trigger rendering the UI
+
++ event parameter was passed automatically in JS for any event that we are listenning. Event.target.value

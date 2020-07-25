@@ -26,3 +26,35 @@ import { clean as newClean } from './work.js' // ==> the clean in original will 
 // We also import everything from the original file to receiving file by:
 import * as allProperties from './work.js' // so everything in file work.js will be imported in application.js
 // file with the brief name now is allProperties
+///////////////////////////////////////////////////////////////////////////////////
+//for class
+class Name = {
+    /////
+}
+
+export default Name;
+
+//OR
+export default class Name = {
+    /////
+}
+
+//=> import Name from './path' ==> because we added the default keyword
+//////////////////////////////////////////////////////////////////////////////////////
+export class Name {
+    //
+}
+
+//==> import { Name } from './path' ==>because class is also an object
+
+//////////////////////////////////////////////////////////////////////////////////////
+export function Test() {
+    //.....
+}
+//==> import { Test } from './path' ==> because function Test is also an object
+
+
+export default function Test() {
+
+}
+//==> import Test from './path'

@@ -62,7 +62,7 @@ function third() {
     console.log(a + ' ' + d); // true, because a is global and d is its properties
 }
 
-/**********Example about this keyword - Lexical this keyword*****/
+/**********Example about this keyword - Lexical this keyword - That returns a its current object *****/
 // *************************In Objects***********************/
 console.log(this); // print out the window object
 
@@ -70,7 +70,7 @@ var nhat = {
     name: 'nhattan',
     birthYear: 1992,
     calAge: function () { // just like expression function <=> variable declaration
-        //console.log(this); // this now point to the oject "nhat"
+        console.log(this); // this now point to the oject "nhat"
         function innerCal() {
             /* in this case, this point to the default object which is window object.
             Though function innerCal is in the calAge function, it is not a method,
@@ -80,15 +80,23 @@ var nhat = {
         }
     }
 };
-
-nhat.calAge();
+nhat.calAge();// call nhat
 
 var ho = {
     name: 'honhat',
     birthYear: 1993
 };
-ho.calAge = nhat.calAge;
-ho.calAge();
+ho.calAge = nhat.calAge;//call ho, now, nhat.calAge refer to a function, and this function was assigned to the ho.calAge method
+ho.calAge();//==> call this function, the this object will return the current its object ==> return ho object.
+
+let getFun = nhat.calAge;// just reference to the function, not call directly
+getFun();//=> cannot print the same object as previous case, because getFun() is just a normal function, so the this keyword now cannot return its object
+
+// ==>  Fix:
+let getFun = nhat.calAge.bind(nhat);//calling bind method to pass the nhat object
+getFun()// will return a nhat object.
+//Note: we cannot use let getFun = nhat.calAge.bind(this); because now in this command line, the "this" is equal the window object 
+
 /********************************************************************************************/
 
 var nhat1 = {
@@ -106,11 +114,44 @@ var nhat1 = {
     }
 };
 
-var res = nhat1.calAge(); // Object { name: "nhattan", birthYear: 1992, calAge: calAge()
+var res1 = nhat.calAge;// res1 reference to the calAge() function, not running this calAge() function
+res1(); //==> now, the calAge() function is triggered to run, but now it is just a normal function, so the first console.log(this) cannot print the nhat1 object, it prints the window object
+
+var res = nhat1.calAge(); // running the calAge() function of nhat1 object, so the first console.log(this) still print out the nhat1 object, then return a function which was assinged to the res
 res(); // Window file:///D:/sharefolder/project/firstReact/Practice_JavaScript/6.Hoisting_Scoping_This/index.html
+// Because now res is a normal function which was returned by calAge() function, so in the second console.log(this), this now is just point to the window object
 
+//==> fix 1:
+var nhat1 = {
+  name: 'nhattan',
+  birthYear: 1992,
+  calAge: function () { 
+      console.log(this.name);
+      return function() {
+          console.log(this.name);
+      }.bind(this); // pass "this" object which is poiting to the nhat1 object into inner function
+  }
+};
 
-// /*************************************How to fix for Object********************************/
+var res = nhat1.calAge(); // Now, res is the function returned by calAge() function. It was also passed the nhat1 object.
+res();//==> print the nhat1 object
+
+//==> fix 2:
+var nhat1 = {
+  name: 'nhattan',
+  birthYear: 1992,
+  calAge: function () { 
+      console.log(this.name);
+      return () => {
+          console.log(this.name);
+      };
+  }
+};
+
+var res = nhat1.calAge(); 
+res();
+
+// /*************************************Continue for Object********************************/
 // Example:
 var box5 = {
     color: 'green',
@@ -293,14 +334,12 @@ handleChange = even => {
     }
 
 //The different thing is line: handleChange={this.handleChange} now we don't call directly the handleChange
-//function "this.handleChange()". Instead of that, we just use handleChange to refer a method. And now,
-//this.handleChange will look back to the method and see the method handleChange in line 291 are assigning to
-//the other function. So, right now, we are having two different functions. The left is a method of class <=>
-//this.handleChange, and thhe righ is arrow function(in line 291). It just like now the right function cannot be
-//treated as method of the class anymore. That's why, the "this" object of the right function will be 
-// not sure a "this" object of the class. However, in this case, the right function is a arrow function,
-//==> its "this" object will be shared with the "this" object of the left function that means it is also the
-//"this" object of class. In the other case, instead of using arrow in ES7, we use the declaration in
+//function as calling "this.handleChange()". Instead of that, we just use handleChange to refer a method, likes reference 
+//to the handleChange = event {} function. And now, this.handleChange will look back to the method and see the function
+//hanleChange = event ==> {}. So, right now, we are having two parts in handleChange={this.handleChange}.
+//The left is a variable to get a function, and the right is treated as a normal function. So the "this" keyword now is not
+//sure to point the current object. However, in this right function now is an arrow function, so the "this" of function will 
+//be shared with the "this" of current object. Finally, it work correctly. On the other cases, if we use as below:
 //ES6 like:
 handleChange(even) {
   return this.setState({searchField: even.target.value});
@@ -311,7 +350,7 @@ handleChange(even) {
 
 //We also see the second way to make the "this" object of the right function
 // be equal the "this" object of class by using bind method in number 2.
-handleChange={this.handleChange}
+handleChange={this.handleChange}// Now, the left handleChange will reference to a function, not calling directly a function
 /////////////////////////////////////////////////////////////////
 
 2/////////////////////////////////////////////////////////////////
@@ -367,8 +406,13 @@ handleChange={this.handleChange}
   handleChange = even => {
       return this.setState({searchField: even.target.value});
   }
+  //or
+  handleChange = function(even) {
+    return this.setState({searchField: even.target.value}); 
+  }
 
-  handleChange={ e => this.handleChange(e) }
+  handleChange={ e => this.handleChange(e) } // we are calling directly a method of function ==> doesn't matter the function 
+  // handleChange is arrow or not
   /////////////////////////////////////////////////////////////////
   //We can explain the number 5 and 6 base on the previous cases. Now, we can have some error cases:
 
@@ -404,7 +448,7 @@ handleChange={this.handleChange}
   }.bind(this);
 
   // Because it is not a function expression, it now is a function declaration. We only can do:
-  function(){}.bind(this); // it likes a function expression
+  function(){}.bind(this); // it now is a function declaration
 
   // So, we can fix by using the code below:
   /////////////////////////////////////////////////////////////////
