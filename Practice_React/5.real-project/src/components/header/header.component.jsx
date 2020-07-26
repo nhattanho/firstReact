@@ -13,7 +13,7 @@ const Header = ({currentUser}) => (
         <div className='options'>
             <Link className='option' to='/shop'>SHOP</Link>
             <Link className='option' to='/contact'>CONTACT</Link>
-            {console.log('test Header')}
+            {console.log(`We are in header file ${currentUser}`)}
             {
                 
                 currentUser ?

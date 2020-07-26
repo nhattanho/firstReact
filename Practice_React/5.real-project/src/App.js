@@ -5,7 +5,7 @@ import {Route, Switch, Link} from 'react-router-dom';
 import ShopPage from './pages/shop/shop.component';
 import Header from './components/header/header.component';
 import SigninSignupPage from './pages/signin-signup/signin-signup.component';
-import { auth } from '../src/firebase/firebase.utils';
+import { auth, createUserProfileDocument } from '../src/firebase/firebase.utils';
 
 // const HatsPage = (props) => {
 //   console.log(props); // props is an object
@@ -51,12 +51,58 @@ class App extends Component {
     this.unsubscribeFromAuth();
   }
 
-  componentDidMount() {
-    this.unsubscribeFromAuth = auth.onAuthStateChanged(user => {// called whenever having something change on signin or out, or updated from user
-      this.setState( {currentUser: user} ); // always open the gate to connect with firebase ==> we need to close to avoid memory leak
-      console.log('didmount');
-      console.log(user);
-    });
+  // componentDidMount() {
+  //   //user is a object returned by google's autho
+  //   this.unsubscribeFromAuth = auth.onAuthStateChanged(user => {// called whenever having something change on signin or out, or updated from user
+  //     this.setState( {currentUser: user} ); // always open the gate to connect with firebase ==> we need to close to avoid memory leak
+  //     console.log('didmount');
+  //     console.log(user);
+  //   });
+  // }
+
+  componentDidMount() { //Note: whenever we refresh the page, the mount process restarts, so after that the didmountComponent will be always called 
+  /*Note
+  Particularly, if we click the sign out button, the method auth.signOut() immediately, it remove the user to null <=> changed user already
+  ==> caused the auth.onAuthStateChanged() function run.
+
+  */  
+    // auth.onAuthStateChanged() ==> was triggered until anything change about the user paramater like they login with another account or refresh the page,
+    // if they still login with the old account or old information, this function doesn't run.
+    // And user is a object returned by google's autho whenever having something change on signin or out,
+    // or updated from user. In the other word, the user was only returned when the function auth.onAuthStateChanged() was triggered
+    this.unsubscribeFromAuth = auth.onAuthStateChanged(async user => { 
+      if (user) {
+    //this.setState( {currentUser: user} ); // always open the gate to connect with firebase ==> we need to close to avoid memory leak
+    // Besides, the user returned by auth contains too much information we don't need, so we used the function createProfileDocument 
+    // to just get the neccessary or specific infor.
+
+    //console.log(user);
+
+    //*Note: console.log(createUserProfileDocument(user));==> Promise { <state>: "pending" }, because
+    //in firebase.utils.js, the processing is running in the background, so at the time to return userRef
+    // the process hasn't finished, so it hasn't updated for userRef ==> fix by using then and catch because 
+    // the async function return a promise
+        createUserProfileDocument(user).then( result => {
+          const userRef = result;
+
+          console.log(`testing for userRef in app.js: ${userRef}`);
+
+          userRef.onSnapshot( snapShot => {
+            this.setState({
+              currentUser: { // Set up new information for current User
+                id: snapShot.id,
+                ...snapShot.data() //actual data located in snapShot.data
+              }
+            });
+          });
+        }).catch(error => {
+            console.log(`Something error by ${error}`);
+        });
+      } else {
+        this.setState( {currentUser: null } )
+      }
+
+    })
   }
 
   render() {
