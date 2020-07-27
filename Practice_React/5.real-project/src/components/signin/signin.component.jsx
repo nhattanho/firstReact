@@ -17,7 +17,7 @@ class SignIn extends Component {
     };
     
     handleChange = event => {
-        const { value, name } = event.target; // event.target will return an object
+        const { value, name } = event.target; // event.target will return an object that contains all properties we pass into the FormInput: name , type, value, label....
         /* Example: {
                         value: 'honhattan2411@gmail.com',
                         name: 'email'               
