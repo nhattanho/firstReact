@@ -39,7 +39,9 @@ console.log('test for object');
 let obj = {
     name1: 'tan',
     age1: 29,
-    job1: 'tutor'
+    job1: 'tutor',
+    hobby: 'reading',
+    music: 'Safe and Sound'
 };
 
 // Note: the {name1 and age1} has to be same as the name1 and age1 of obj
@@ -54,10 +56,31 @@ console.log(job1); // tutor
 console.log(age1); // 29
 console.log(name1); // tan
 
+//Get the rest methods by using spread parameter
+let {job1, age1, name1, ...otherProps } = obj; 
+//==> now, otherProps is an object containing hobby and music ==> we can use: otherProps.hobby or otherProps.music
+
 // or we can change the name of variable for an object
 let {name1: a, age1: b} = obj;// ==> a = obj.name and b = obj.age
 console.log(a + ' ' + b);
 
+// In addtion to the change name of methods, we can use the destructuring two times as we want.
+// Let's see an example:
+const {data} = await axios.get(url);
+
+const realData = {
+    confirmed: data.confirmed,
+    recovered: data.recovered,
+    deaths: data.deaths,
+    lastUpdate: data.lastUpdate
+}
+return realData;
+/* As we can see await function return an object and one of the methods of this object is data
+so we use the destructuring to get the data. Besides, data is also an object having methods confirmed
+recovered, deaths, lastUpdate. We can implement by creating a new realData as above, we however use
+the second destructuring in this case. Like:
+const { data: {confirmed, recovered, deaths, lastUpdate} } = await axios.get(url)
+return {confirmed, recovered, deaths, lastUpdate} */
 
 // ES5
 const boxes = document.querySelectorAll('.box');// return a Nodelists
