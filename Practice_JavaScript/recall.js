@@ -324,3 +324,6 @@ let {job1, age1, name1 } = obj; // doesn't matter the order of object's method(j
 console.log(job1); // tutor
 console.log(age1); // 29
 console.log(name1); // tan
+
++ Format number in Link reference
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat
