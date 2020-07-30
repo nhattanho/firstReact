@@ -40,7 +40,7 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
         const {displayName, email} = userAuth;
         const createAt = new Date();
         try {
-            await userRef.set({ //set data and save into database
+            await userRef.set({ //set data to make a document snapShot object and save it into database
                 displayName,
                 email,
                 createAt,

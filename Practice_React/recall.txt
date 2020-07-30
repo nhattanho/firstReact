@@ -333,3 +333,41 @@ const Person = (props) => {
 -State: is a own property of current component. Anything makes state change always trigger rendering the UI
 
 + event parameter was passed automatically in JS for any event that we are listenning. Event.target.value
+
++ Create favicon ==> look back to project Quote_Genarator in Javascript_Projects
+
++ Get collection from database:
+const firestore = firebase.firestore();
+firestore.collection('users').doc(<ID1>).collection('cartItems).doc(<ID2>)
+firestore.doc('/users/ID1/cartItems/ID2')
+firestore.collection('/users/ID1/cartItems')
+
++ queryReference object is an object that represents the current place in the database, we can call it by:
+const userRef = firestore.doc('/users/ID1/cartItems/ID2')
+firestore.collection('/users/ID1/cartItems')
+However, an object userRef got from queryReference does not have the actual data. In stead of that, it contains
+the current place in database like I said before and the details of its data. So, if we to update the information
+for database, we use userRef <=> queryReference
+
+And if we want to get the actual data that we use for updating UI, we have to call the onSnapshot() which is 
+userRef's method. It should be liked: 
+userRef.onSnapshot( snapShot => {
+    this.setState({
+        currentUser: { // Set up new information for current User
+        id: snapShot.id,
+        ...snapShot.data() //actual data located in snapShot.data
+        }
+    });
+});
+
+Conclusion: 
+                          Document Reference: const docRefer = firestore.doc('/users/ID1/cartItems/ID2') ==> using docRefer.(get, set, update, delete) to return documentSnapshot object containing actual data
+                         /
+                        /
+        Query Reference  ==> return docRefer, collRefer are reference objects representing the current place in the database, not for actual data
+      /                 \
+     /                   \
+Query                     Collection Reference: const collRefer = firestore.collection('/users/ID1/cartItems') ==> using collRefer.(add, get) ==> return querysnapshot object containing actual data
+     \
+      \
+        Query Snapshot: from the graph above, to take the snapshot object, it has to go through the document/collection reference object and then using the CRUD or add method.
