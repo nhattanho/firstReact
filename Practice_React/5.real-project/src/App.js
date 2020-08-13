@@ -64,11 +64,11 @@ class App extends Component {
   /*Note
   Particularly, if we click the sign out button, the method auth.signOut() immediately, it remove the user to null <=> changed user already
   ==> caused the auth.onAuthStateChanged() function run.
-
   */  
-    // auth.onAuthStateChanged() ==> was triggered until anything change about the user paramater like they login with another account or refresh the page,
+    console.log('In did mount');
+    // auth.onAuthStateChanged() ==> was triggered whenever anything change about the user paramater like they login with another account or refresh the page,
     // if they still login with the old account or old information, this function doesn't run.
-    // And user is a object returned by google's autho whenever having something change on signin or out,
+    // And user is a object returned by google's auth whenever having something change on signin or out,
     // or updated from user. In the other word, the user was only returned when the function auth.onAuthStateChanged() was triggered
     this.unsubscribeFromAuth = auth.onAuthStateChanged(async user => { 
       if (user) {
@@ -94,6 +94,7 @@ class App extends Component {
                 ...snapShot.data() //actual data located in snapShot.data
               }
             });
+            console.log(this.state);
           });
         }).catch(error => {
             console.log(`Something error by ${error}`);
