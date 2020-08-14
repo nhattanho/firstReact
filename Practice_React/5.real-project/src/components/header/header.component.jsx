@@ -3,8 +3,9 @@ import './header.style.scss';
 import {Link} from 'react-router-dom';
 import {ReactComponent as Logo} from '../assets/crown.svg';
 import { auth } from '../../firebase/firebase.utils';
+import {connect} from 'react-redux';
 
-const Header = ({currentUser}) => (
+const Header = ({currentUser}) => ( // using destructure to get an object CurrentUser which was updated from App state
    <div className='header'>
         <Link className='logo-container' to='/'>
             <Logo className='logo'></Logo>
@@ -25,5 +26,8 @@ const Header = ({currentUser}) => (
 
    </div> 
 )
-
-export default Header;
+// access to the state
+const mapStateToProps = state => ({ //state is a object of root reducer, which will call the userReducer to get an CurrentUser which was updated from App state
+    currentUser: state.user.currentUser
+});
+export default connect(mapStateToProps)(Header); // mapStateToProps is a props of Header, and it returns an object CurrentUser

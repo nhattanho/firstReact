@@ -6,6 +6,9 @@ import ShopPage from './pages/shop/shop.component';
 import Header from './components/header/header.component';
 import SigninSignupPage from './pages/signin-signup/signin-signup.component';
 import { auth, createUserProfileDocument } from '../src/firebase/firebase.utils';
+import {connect} from 'react-redux';
+import { setCurrentUser } from './redux/user/user.action';
+
 
 // const HatsPage = (props) => {
 //   console.log(props); // props is an object
@@ -40,13 +43,12 @@ import { auth, createUserProfileDocument } from '../src/firebase/firebase.utils'
 // );
 
 class App extends Component {
-
-  state = {
-    currentUser: null
-  }
-
   unsubscribeFromAuth = null;
 
+  /* When calling the onAuthStateChanged or onSnapshot methods from auth library
+  <=> we subcribed the listener that always listening from database ==> to unscribe
+  this lentener to avoid memory leak in our application when the component has already
+  umounted, we get back a function as below implementation */
   componentWillUnmount(){
     this.unsubscribeFromAuth();
   }
@@ -65,6 +67,14 @@ class App extends Component {
   Particularly, if we click the sign out button, the method auth.signOut() immediately, it remove the user to null <=> changed user already
   ==> caused the auth.onAuthStateChanged() function run.
   */  
+
+    /*We don't need it because we will use redux
+    state = {
+      currentUser: null
+    }
+    */
+   const {setCurrentUser} = this.props; // destructure to get a function setCurrentUser
+
     console.log('In did mount');
     // auth.onAuthStateChanged() ==> was triggered whenever anything change about the user paramater like they login with another account or refresh the page,
     // if they still login with the old account or old information, this function doesn't run.
@@ -85,22 +95,29 @@ class App extends Component {
         createUserProfileDocument(user).then( result => {
           const userRef = result;
 
-          console.log(`testing for userRef in app.js: ${userRef}`);
-
           userRef.onSnapshot( snapShot => {
+            /*Replace by using redux
+            // Set up new information for current User
             this.setState({
               currentUser: { // Set up new information for current User
                 id: snapShot.id,
                 ...snapShot.data() //actual data located in snapShot.data
               }
             });
+            console.log('done update the currentUser');
             console.log(this.state);
+            */
+           setCurrentUser({ // will call the dispatch(setCurrentUser(...))
+             id: snapShot.id,
+             ...snapShot.data()
+           });
+            console.log('done update the currentUser');
           });
         }).catch(error => {
             console.log(`Something error by ${error}`);
         });
       } else {
-        this.setState( {currentUser: null } )
+        setCurrentUser(null)
       }
 
     })
@@ -133,7 +150,7 @@ class App extends Component {
           Conclusion, we need to use exact to make sure getting the true path that we want to navigate.
           */}
 
-        <Header currentUser={this.state.currentUser}></Header>
+        <Header></Header>
         <Switch>
           {/* Route default has 3 parameters: exact, path <=> url, and component */}
           <Route exact path='/' component={HomePage}></Route> 
@@ -154,4 +171,11 @@ class App extends Component {
   }
 };
 
-export default App;
+
+const mapDispatchToProps = dispatch => ({
+  setCurrentUser: user => dispatch(setCurrentUser(user))// return an action object has type: 'SET_CURRENT_USER' and payload: user
+})
+export default connect(null, mapDispatchToProps)(App); // App doesn't need the currentUser because it has itself
+// ==> the first argument is null. And now, null and mapDispatchToProps is a props of App. Also, mapDispatchToProps
+// is a function that return an object having a property as a function, setCurrentUser
+// connect called higher component that means it receives a component as a parameter
