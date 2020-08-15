@@ -1,3 +1,5 @@
+const { default: store } = require("../5.real-project/src/redux/store")
+
 Why do we want to use Redux?
 Assume we have a big application:
 
@@ -21,3 +23,30 @@ actions happening in application.
 actions ==> middleware ==> root reducer --- user reducer + user actions ==================================> store as a props of Provider that contains all of action in applicaton ==> DOM change by react
                                         \                              \
                                           shop reducer                   payload: an object
+
++ The structure of Redux folder:
+
+
+
+              cart-reducer(state, action) returns an cart object saved in root-reducer
+             /
+         cart---cart-action is a function returns an action object: type and payload 
+        /    \
+       /      cart-type: all type of posible action, example: TOGGLE_CART_HIDDEN, ADD_ITEM
+      /
+     /         user-reducer(state, action) returns an user object saved in root-reducer
+    /         /
+Redux --- user --- user-action returns an action object
+    \         \ 
+     \         user-type 
+      \
+       \
+        \
+         root-reducer contains all objects get from the all the actions and all these object was saved into store.js which called is state
+         ==> example state will have: {cart, user} objects
+
++ The flow of process:
+Action from CartIcon  ==> call the action to return an action object: type and payload ==> passed in to reducer to return an final object ==> saved in to store by state object
+
++ mapDispatchToProps: call the action to set the value which will be used by the other child component
++ mapStateToProps: call to use the result of previous action happened in mapDispatchToProps
