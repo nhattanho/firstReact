@@ -4,14 +4,6 @@ import 'firebase/auth';
 
 const config = {
     /* Using your firebase infor */
-    apiKey: "AIzaSyBOF_IxGosaGO_LjOQsgzmmWn1Vt9vvx6Y",
-    authDomain: "ecommer-bb4a2.firebaseapp.com",
-    databaseURL: "https://ecommer-bb4a2.firebaseio.com",
-    projectId: "ecommer-bb4a2",
-    storageBucket: "ecommer-bb4a2.appspot.com",
-    messagingSenderId: "82358193481",
-    appId: "1:82358193481:web:c9c997deedbf65d0ec1e98",
-    measurementId: "G-KH7ZMWEP7F"
 
 };
 

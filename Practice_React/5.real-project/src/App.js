@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import { HomePage } from './pages/homepage/homepage.component';
-import {Route, Switch, Link} from 'react-router-dom';
+import {Route, Switch, Redirect} from 'react-router-dom';
 import ShopPage from './pages/shop/shop.component';
 import Header from './components/header/header.component';
 import SigninSignupPage from './pages/signin-signup/signin-signup.component';
@@ -155,7 +155,12 @@ class App extends Component {
           {/* Route default has 3 parameters: exact, path <=> url, and component */}
           <Route exact path='/' component={HomePage}></Route> 
           <Route exact path='/shop' component={ShopPage}></Route>
-          <Route exact path='/signin' component={SigninSignupPage}></Route>
+          {/*<Route exact path='/signin' component={SigninSignupPage}/>*/}
+          <Route 
+            exact path='/signin' 
+            render={()=>{
+              return this.props.currentUser ? (<Redirect to='/'/>) : (<SigninSignupPage/>)
+            }}/>
           {/* just for the testing
             <Route exact path='/hats' component={HatsPage}></Route>
             <Route exact path='/hats/hat' component={HatPage}></Route>
@@ -171,11 +176,19 @@ class App extends Component {
   }
 };
 
+const mapStateToProps = ({user}) => ({ // the way to get the currentUser
+  currentUser: user.currentUser
+})
 
 const mapDispatchToProps = dispatch => ({
   setCurrentUser: user => dispatch(setCurrentUser(user))// return an action object has type: 'SET_CURRENT_USER' and payload: user
 })
-export default connect(null, mapDispatchToProps)(App); // App doesn't need the currentUser because it has itself
+export default connect(mapStateToProps, mapDispatchToProps)(App); // App doesn't need the currentUser now
 // ==> the first argument is null. And now, null and mapDispatchToProps is a props of App. Also, mapDispatchToProps
 // is a function that return an object having a property as a function, setCurrentUser
 // connect called higher component that means it receives a component as a parameter
+
+// Now, null become to mapStateToProps because we want to get the CurrentUser to update for other component
+
+/* The process: Whenever having something change on the user, such as sign-in/out, refesh page ==> calling the onAuthStateChanged
+==> setCurrentUser ==> rerender the Header component ==> check render for SignInSignOut page */
