@@ -135,7 +135,7 @@ class App extends Component { // class App extends React.Component {}
     // console.log('***********************end***************************');
     return (
       <div className="App"> 
-        <h1> My First App </h1>
+        <h1> Let's find the monsters </h1>
         <SearchBox 
           placeholder='search monster' 
           

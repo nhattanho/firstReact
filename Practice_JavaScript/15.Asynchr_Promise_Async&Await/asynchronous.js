@@ -121,7 +121,7 @@ async function getGrades() { // async returns a promise
     console.log('We are in async function');
 
     /* The part of code from line 126 to 138 will be put and forced to run in background <=> that means
-    whenever program catches the await command, it will put all of code from its line to the end exept 
+    whenever program catches the await command, it will put all of code from its line to the end except 
     returning command*/
     const getGra = await grades1; // getGra will hold the array which was returned from grades1 promise
     console.log(getGra);
@@ -160,3 +160,154 @@ this character nhatho has grade 74 asynchronous.js:127:13
 We are end-in async function asynchronous.js:133:13
 11
 Array(4) [ 1, 56, 74, 90 ] */
+
+
+/*****************************Another example******************************** */
+// Get Quote From API
+async function getQuote() {
+    showLoadingSpinner();
+    //console.log('we are in getQuote');
+    //const apiUrl = 'https://cors-anywhere.herokuapp.com/http://api.forismatic.com/api/1.0/?method=getQuote&key=457653&format=json&lang=en';
+    //const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+    //const apiUrl = 'http://api.forismatic.com/api/1.0/?method=getQuote&lang=en&format=json';
+    const apiUrl = 'https://type.fit/api/quotes';
+
+
+    try {
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+        const index = Math.floor((Math.random() * 1643) + 1);
+        const getData = data[index];
+        if (data.authorText === '') {
+            authorText.innerText = 'Unknow';
+        } else authorText.innerText = getData.author;
+        
+        if (getData.text.length > 120) {
+            quoteText.classList.add('long-quote');
+        } else {
+            quoteText.classList.remove('long-quote');
+        }
+        quoteText.innerText = getData.text;
+
+        /* Simulate the error in real case */
+        if (countTestErr < 10) {
+            /* The way to create an error for testing some cases*/
+            throw new Error('opps');
+        } else {
+            countTestErr = 0;
+            removeLoadingSpinner();
+        }    
+    } catch(err) {
+        countTestErr ++;
+        console.log(`whoops, cann't get quote ${err}`);
+        getQuote();
+    }
+}
+
+
+/*****************************Another example******************************** */
+async function getPhotos() {
+    showLoadingSpinner();
+    try {
+        const res = await fetch(apiUrl);
+        const photosArr = await res.json();
+        //console.log(photosArr);
+        totalImages = photosArr.length;
+        displayPhotos(photosArr);
+        removeLoadingSpinner();
+        
+    } catch(err) {
+        //Catch error here
+        console.log(err);
+    }
+}
+
+/*Note:
+As we know that using the async function to run some await function into it. Also, the async function returns the promise.
+Whenever any problem happens into a async function, immediately it stops the async function, and return the error after that. Then
+the promise return with an error, and will be catch by the then().catch() method function. That's why we cannot have knowledge to 
+know exactly where caused the error. Look at the example:
+*/
+export const createUserProfileDocument = async (userAuth, additionalData) => {
+    console.log(`We are in firebase ${userAuth}`);
+
+    const userRef = firestore.doc(`users/${userAuth.uid}`);
+    console.log('testing for userRef in firebase');
+    console.log(userRef);
+
+    const snapShot = await userRef.get();
+    console.log('testing for snapShot in firebase');
+    console.log(snapShot.exists);
+    console.log(snapShot);
+
+    if(!snapShot.exists) { // exists is in the prototype of snapshot object, and this use for checking whether the user's info are in the database
+        const {displayName, email} = userAuth;
+        const createAt = new Date();
+        try {
+            await userRef.set({ //set data and save into database
+                displayName,
+                email,
+                createAt,
+                ...additionalData
+            });
+        } catch(err) {
+            console.log('error creating user', err.message);
+        }
+    }
+
+    return userRef;
+};
+
+/*We can see in createUserProfileDocument() function has so many important commands, like examples:
+const userRef = firestore.doc(`users/${userAuth.uid}`);
+const snapShot = await userRef.get();
+
+So, what happen if one of these command has an error?
+==> it stops the process right away, and we cannot print the console.log after that to receive an error
+mannualy. Then, go back to the App.js where called this function, though we catch the error from the 
+createUserProfileDocument(), but we don't know exactly where it caused the original problem. So, to make sure
+we know that, we have to try and catch for each command. As we can see as code below:
+*/
+export const createUserProfileDocument = async (userAuth, additionalData) => {
+    console.log(`We are in firebase ${userAuth}`);
+    let userRef = '';
+    try {
+        userRef = firestore.doc(`users/${userAuth.uid}`);
+    } catch(err) {
+        console.log(`error from testing userRef in firebase`);
+    }
+    console.log('testing for userRef in firebase');
+    console.log(userRef);
+
+    let snapShot;
+    try {
+        snapShot = await userRef.get();
+    } catch(error) {
+        console.log('error for testing snapShot ');
+    }
+    console.log('testing for snapShot in firebase');
+    console.log(snapShot.exists);
+    console.log(snapShot);
+
+    if(!snapShot.exists) { // exists is in the prototype of snapshot object, and this use for checking whether the user's info are in the database
+        const {displayName, email} = userAuth;
+        const createAt = new Date();
+        try {
+            await userRef.set({ //set data and save into database
+                displayName,
+                email,
+                createAt,
+                ...additionalData
+            });
+        } catch(err) {
+            console.log('error creating user', err.message);
+        }
+    }
+    return userRef;
+};
+/* The code above has fixed the previous problem, however, the problem is if we catch each error/problem
+for each command like that, then the process in this code still continue because the parent function
+createUserProfileDocument() just thinks it has successfully handled all problem in its body'code. 
+so finanlly, it still returns the userRef, which was empty, for the App.js function. Therefore, in the 
+App.js function didn't catch the error even though the error existed already. That's why in the App.js, 
+we should have some tricks to handle each original error to know exactly where caused the error*/

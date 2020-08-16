@@ -1,4 +1,5 @@
 const { default: store } = require("../5.real-project/src/redux/store")
+const { default: CustomButton } = require("../5.real-project/src/components/custom-button/custom-button.component")
 
 Why do we want to use Redux?
 Assume we have a big application:
@@ -46,7 +47,8 @@ Redux --- user --- user-action returns an action object
          ==> example state will have: {cart, user} objects
 
 + The flow of process:
-Action from CartIcon  ==> call the action to return an action object: type and payload ==> passed in to reducer to return an final object ==> saved in to store by state object
+Action from CartIcon which calls the action, such as click button,(this component has to be add action.js file) 
+==> call the action to return an action object: type and payload ==> passed in to reducer to return an final object ==> saved in to store by state object
 
 + mapDispatchToProps: call the action to set the value which will be used by the other child component
 + mapStateToProps: call to use the result of previous action happened in mapDispatchToProps

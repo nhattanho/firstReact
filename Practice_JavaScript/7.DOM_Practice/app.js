@@ -87,10 +87,10 @@ document.querySelector('.btn-roll').addEventListener('click', function(){
 
 
 document.querySelector('.btn-hold').addEventListener('click', function(){
-    if(scores[activePlayer] < 20){
+    if(scores[activePlayer] < 40){
         scores[activePlayer] += roundScore;
         document.getElementById('score-' + activePlayer).textContent = scores[activePlayer];
-        if(scores[activePlayer] >= 20) {
+        if(scores[activePlayer] >= 40) {
             document.getElementById('name-' + activePlayer).textContent = 'Winner!';
             document.querySelector('.player-' + activePlayer + '-panel').classList.remove('active');
             document.querySelector('.player-' + activePlayer + '-panel').classList.add('winner');

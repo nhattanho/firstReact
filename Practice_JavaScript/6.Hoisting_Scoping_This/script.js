@@ -452,7 +452,7 @@ handleChange={this.handleChange}// Now, the left handleChange will reference to 
 
   // So, we can fix by using the code below:
   /////////////////////////////////////////////////////////////////
-  this.handleChange = this.handleChange.bind(this);//return a function
+  handleChange = this.handleChange.bind(this);//return a function
 
   handleChange(even) {
     return this.setState({searchField: even.target.value});
