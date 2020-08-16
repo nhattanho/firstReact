@@ -50,5 +50,16 @@ Redux --- user --- user-action returns an action object
 Action from CartIcon which calls the action, such as click button,(this component has to be add action.js file) 
 ==> call the action to return an action object: type and payload ==> passed in to reducer to return an final object ==> saved in to store by state object
 
-+ mapDispatchToProps: call the action to set the value which will be used by the other child component
++ mapDispatchToProps(plug the reducer in this component): call the action to set the value which will be used by the other child component
+const mapDispatchToProps = dispatch => ({
+    addItem: item => dispatch(addItem(item)) //dispatch to pass an object into store by calling an action
+})
+export default connect(null, mapDispatchToProps)(Collection);
+
 + mapStateToProps: call to use the result of previous action happened in mapDispatchToProps
+const mapStateToProps = ({user: {currentUser}, cart: {hidden}}) => ({  //state, object of root reducer
+    currentUser: currentUser,
+    hidden: hidden
+})
+
++user and cart are state object's properties in root reducer
