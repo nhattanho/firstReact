@@ -8,7 +8,8 @@ import SigninSignupPage from './pages/signin-signup/signin-signup.component';
 import { auth, createUserProfileDocument } from '../src/firebase/firebase.utils';
 import {connect} from 'react-redux';
 import { setCurrentUser } from './redux/user/user.action';
-
+import {selectCurrentUser} from '../src/redux/user/user.selector';
+import {createStructuredSelector} from 'reselect';
 
 // const HatsPage = (props) => {
 //   console.log(props); // props is an object
@@ -176,13 +177,22 @@ class App extends Component {
   }
 };
 
-const mapStateToProps = ({user}) => ({ // the way to get the currentUser
-  currentUser: user.currentUser
-})
+// const mapStateToProps = ({user}) => ({ // the way to get the currentUser
+//   currentUser: user.currentUser
+// })
+
+// const mapStateToProps = (state) => ({
+//   currentUser: selectCurrentUser(state)
+// })
+
+const mapStateToProps = createStructuredSelector({
+  currentUser: selectCurrentUser
+});
 
 const mapDispatchToProps = dispatch => ({
   setCurrentUser: user => dispatch(setCurrentUser(user))// return an action object has type: 'SET_CURRENT_USER' and payload: user
-})
+});
+
 export default connect(mapStateToProps, mapDispatchToProps)(App); // App doesn't need the currentUser now
 // ==> the first argument is null. And now, null and mapDispatchToProps is a props of App. Also, mapDispatchToProps
 // is a function that return an object having a property as a function, setCurrentUser
