@@ -10,6 +10,7 @@ import {connect} from 'react-redux';
 import { setCurrentUser } from './redux/user/user.action';
 import {selectCurrentUser} from '../src/redux/user/user.selector';
 import {createStructuredSelector} from 'reselect';
+import CheckoutPage from './pages/checkout/checkout.component';
 
 // const HatsPage = (props) => {
 //   console.log(props); // props is an object
@@ -156,6 +157,7 @@ class App extends Component {
           {/* Route default has 3 parameters: exact, path <=> url, and component */}
           <Route exact path='/' component={HomePage}></Route> 
           <Route exact path='/shop' component={ShopPage}></Route>
+          <Route exact path='/checkout' component={CheckoutPage}></Route>
           {/*<Route exact path='/signin' component={SigninSignupPage}/>*/}
           <Route 
             exact path='/signin' 
