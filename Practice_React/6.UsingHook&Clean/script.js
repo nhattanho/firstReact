@@ -77,7 +77,7 @@ class Example extends React.Component {
   + In addition to the above methods, we need to talk one more that called componentDidCatch. Normally, the component can be rerendered for some reasons, for instances: 
   - Component creation in the first time
   - Component re-rendering due to re-rendering of the parent component
-  - Component re-rendering due to internal change (e.g. a call to this.setState())
+  - Component re-rendering due to internal change (e.g. a call to this.setState(), its props changes)
   - Component re-rendering due to call to this.forceUpdate
 
   However, the special case we want to focus on that is Component re-rendering due to catching an error. So if we don't handle for error cases, the rendering process will be repeated over time, which makes leak memory happen, or even crash our system/application. So with this method, we can catch and handle these errors by ourselves.
